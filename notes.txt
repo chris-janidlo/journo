@@ -4,4 +4,76 @@ TODO:s
 		if there's a clock component do it there otherwise probably do it from index.js
 	figure out good way to implement interrupting/waiting
 
-tells you small but still newsworthy scoop at first, but bigger scoop reveals itself as you question him?
+whistleblower - Travis Wagner
+	eccentric
+		prone to UFO conspiracy theories
+		hobbies
+			flying things - planes, drones
+			astronomy
+			interested in freud and other early psychologists?
+	senior level facebook engineer
+		E7/M2 in facebook system
+			just below director level
+			highest level that seems to still touch code
+			leads teams "as if they were small startups within the larger environment" (as someone on quora said)
+			major focus is user acquisition/retention
+	arrogant
+	socially awkward - more comfortable with his computer than with other people
+	incredibly gifted programmer, competent (but not sparkling) people manager
+	socially conscious, genuinely wants to do good, but often blind to the privilege of his position
+		morally repulsed by project helen and its hasty implementation
+		wants a legacy, to leave the world in a better place
+		wants to improve humanity, both because he's come to love it and because he pities its current state
+	says he comes from rich family, attended prestigious Valley highschool then UC Berkeley
+		went to berkeley for bachelors and phd
+		worked a series of startups until being hired to facebook a couple years ago
+		this is all fake, of course, but he only had to convince the people interviewing/hiring him at facebook, and Bofaeockian mind-control tech makes these things easy
+	is actually an alien from the planet Bofaeock
+		TODO: name?
+		basically a Bofaeockian astronaut - has a "phd," physically fit, years of loyal military service
+		was on the mothership for years working on the master server, but was called down by zark a couple years ago
+		thinks that manipulating humans without their consent is disgusting, and is conflicted between this and loyalty to superiors/homeworld
+
+initial scoop - project helen
+	encryption backdoor for us government
+
+Bofaeock: a brief history
+	highly technologically advanced, centuries beyond humans
+		have developed limited FTL travel based on creating wormholes
+			this requires exact knowledge of the location of your destination
+			the wormhole tunneling method is extremely precise (an error of a few feet can offset the destination by thousands of lightyears) and resource intensive, so scouting teams need to be as certain as possible about their destinations
+	once prosperous society, but they depleted their planet
+		Bofaeock is only just barely alive - if they don't leave, they'll die within a generation
+	scouting squad led by Zark Urckbemerg to find inhabitable planets
+	they found that earth was close, and it looked promising
+		when they arrived they realized that it wouldn't work long term due to generally toxic environment (filtering it out would only work short term)
+		however, they realized that they could use humanity as a massive botnet to run their scouting software on
+		established the scouting ship (the mothership) as a base of operations, hanging out disguised in geostationary orbit over area 51
+			us government is aware of Bofaeockians (multiple alien species live on earth with a men-in-black style relationship) but not aware of the botnet
+
+actual scoop - the scouting algorithm
+	system to find the next Bofaeockian homeworld
+	running hyper sophisticated model of the universe to find a planet that is livable and feasible to travel to
+	consists of three major components - botnet, master server, and interface layer
+	botnet
+		uses human brains since those happen to be remarkably similar to Bofaeockian computers
+		made up of human users of facebook products
+		each human, while signing up for facebook or one of its subsidiary apps, is infected with a neurological virus, a routine running on the subconscious level that runs calculations and changes behavior
+		the neurovirus does the following:
+			compels people to visit social media in order to receive input and potentially software updates
+			runs the inputs against the specified routines
+			compels people to upload computational outputs as disguised as statuses and memes
+			compels people to recruit others onto social media
+	interface layer
+		facebook, instagram, whatsapp, etc
+		uploads the neurovirus into people and serves as repository for output data
+		the exact methods that are used to upload the virus are complex and numerous, but here are a few:
+			viral videos and memes have software updates
+			the number of likes you get indicate the quality of your data
+			maybe the sign up process uses flashing light to upload the initial virus?
+	master server
+		huge wetware datacenter
+		transforms the output data into actual simulation results
+		holds the actual code for the neurovirus upload steps, and the compilation required to disguise those as legitimate application code
+		might be the locus of the actual upload step?
+			would be as follows: the master server is constantly scanning facebook and subsidiary apps to see when users sign up. it then beams the virus into their brain
