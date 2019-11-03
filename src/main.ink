@@ -9,15 +9,15 @@ VAR elapsed_time_seconds = 0.0 // read-only in ink, js should update this
 
 
 == intro
-You have one new message. Click .here to view it.
-* .here
+You have one new message. Type `open` to open it.
+* open
     To whom it may concern,
     I am a senior level Facebook engineer. Facebook is ready to pull the trigger on a terrible choice for user security, and I won't stand for it. I am prepared to go on background to bring the story to the public. Please reach out to me through Journo where I'll be happy to talk about the details.
     Cheers - Anonymous and Angry Facebook Engineer
     ...
-    Click .here to respond to this message.
+    Type `reply` to reply.
 -
-* .here
+* reply
     Hello, who is this?
     ->new_phone_who_dis
 
