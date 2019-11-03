@@ -18,6 +18,8 @@ You have one new message. Type `open` to open it.
     Type `reply` to reply.
 -
 * reply
+    Initializing connection with "FbkE7"...
+    Done. You are now connected to chat.
     Hello, who is this?
     ->new_phone_who_dis
 
