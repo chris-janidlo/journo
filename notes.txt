@@ -4,6 +4,14 @@ TODO:s
 		if there's a clock component do it there otherwise probably do it from index.js
 	figure out good way to implement interrupting/waiting
 
+outline from outer space
+	establish contact with travis
+	interview him about his scoop
+	details emerge slowly that he isn't what he says he is
+	you may or may not discover that travis is an alien and that facebook is all a big Bofaeockian conspiracy
+	we leave journo and you are prompted to choose what kind of story you want to publish based off what you've learned
+	you're told how your story impacts the world
+
 whistleblower - Travis Wagner
 	eccentric
 		prone to UFO conspiracy theories
@@ -15,7 +23,7 @@ whistleblower - Travis Wagner
 		E7/M2 in facebook system
 			just below director level
 			highest level that seems to still touch code
-			leads teams "as if they were small startups within the larger environment" (as someone on quora said)
+			leads teams "as if they were small startups within the larger environment" (as someone on Quora said)
 			major focus is user acquisition/retention
 	arrogant
 	socially awkward - more comfortable with his computer than with other people
@@ -31,7 +39,7 @@ whistleblower - Travis Wagner
 	is actually an alien from the planet Bofaeock
 		TODO: name?
 		basically a Bofaeockian astronaut - has a "phd," physically fit, years of loyal military service
-		was on the mothership for years working on the master server, but was called down by zark a couple years ago
+		was on the mothership for years working on the master server, but was called down by Zark a couple years ago
 		thinks that manipulating humans without their consent is disgusting, and is conflicted between this and loyalty to superiors/homeworld
 
 initial scoop - project helen
@@ -65,14 +73,14 @@ actual scoop - the scouting algorithm
 			compels people to upload computational outputs as disguised as statuses and memes
 			compels people to recruit others onto social media
 	interface layer
-		facebook, instagram, whatsapp, etc
+		facebook, instagram, WhatsApp, etc
 		uploads the neurovirus into people and serves as repository for output data
 		the exact methods that are used to upload the virus are complex and numerous, but here are a few:
 			viral videos and memes have software updates
 			the number of likes you get indicate the quality of your data
 			maybe the sign up process uses flashing light to upload the initial virus?
 	master server
-		huge wetware datacenter
+		huge wetware data center
 		transforms the output data into actual simulation results
 		holds the actual code for the neurovirus upload steps, and the compilation required to disguise those as legitimate application code
 		might be the locus of the actual upload step?
