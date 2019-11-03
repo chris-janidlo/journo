@@ -12,22 +12,30 @@ VAR elapsed_time_seconds = 0.0 // read-only in ink, js should update this
 
 
 == intro
-Hello, is this Newspaper? ->is_this_on
+You have one new message. Click here to view it.
+* here
+    To whom it may concern,
+    I am a senior level Facebook engineer. Facebook is ready to pull the trigger on a terrible choice for user security, and I won't stand for it. I am prepared to go on background to bring the story to the public. Please reach out to me through Journo where I'll be happy to talk about the details.
+    Cheers - Anonymous and Angry Facebook Engineer
+    ...
+    Click here to respond to this message.
+-
+* here
+    Hello, who is this?->new_phone_who_dis
 
-= is_this_on
-* yes
-    ->scoop
-* sorry, no
-    My apologies, I must have set up the chat incorrectly. I'll let you continue with your day.
-    TODO: have him try to reconnect again?
-    ->END
+= new_phone_who_dis
+* this is Newspaper->scoop
 * who are you?
-    We'll get to that later - answer my question first.
-    ->is_this_on
+    I never share my name with an unrecognized number, so you're going to have to answer me first.
+    ->new_phone_who_dis
 
 = scoop
-I'm a /*TODO:*/ very important person, and I just got wind of a major scoop. I only have 5 minutes, however.
+Fantastic, I wasn't expecting this application to actually work.
+You caught me at an awkward time though - I absolutely have to leave for a series of meetings starting in 5 minutes.
 * \ {wait_for_typing(10)}
-    It's not safe for me to take any longer than that.
+    After that I'm going on a tech-detox vacation in Thailand for a week.
 * 5 minutes is not enough time to verify you as a source
-    Too bad, that's all you get. You can verify my information later, but when the 5 minutes are up, no more questions for me.
+    You should have reached out earlier. I'm a busy man.
+
+-
+->END
