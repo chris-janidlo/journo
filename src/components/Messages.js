@@ -16,7 +16,7 @@ const useStyles = makeStyles(theme => {
   }
 });
 
-export const Messages = props => {
+export function Messages (props) {
   const classes = useStyles();
   return (
     <Box className={classes.messages}>

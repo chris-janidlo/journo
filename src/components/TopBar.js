@@ -5,7 +5,7 @@ import {
   Typography
 } from '@material-ui/core';
 
-export const TopBar = props => {
+export function TopBar (props) {
   return (
     <Fragment>
       {/* TODO: do something other than sticky with more cross compatibility? */}

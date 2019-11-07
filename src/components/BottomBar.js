@@ -24,7 +24,7 @@ const useStyles = makeStyles(theme => {
 	}
 });
 
-export const BottomBar = props => {
+export function BottomBar (props) {
   const classes = useStyles();
   return (
     <Paper elevation={4} square className={classes.bottomBar}>
