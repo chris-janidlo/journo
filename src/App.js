@@ -1,21 +1,26 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import {
   Box,
+  AppBar,
+  Toolbar,
+  Typography,
   Paper,
   InputBase,
-  Typography,
   makeStyles,
 } from '@material-ui/core';
 import storyContent from './story.json';
 import { Story } from 'inkjs';
 
 const useStyles = makeStyles(theme => {
-  const margin = theme.spacing(2);
-  const widthMinusMargin = `calc(100vw - ${margin * 2}px)`;
+  const marginSmall = theme.spacing(2);
+  const marginLarge = theme.spacing(3);
 
   return {
-    app: {
-      height: '100vh'
+    content: {
+      marginLeft: marginLarge,
+      marginRight: marginLarge,
+      marginTop: marginSmall,
+      marginBottom: 80 // manually adjust this so that the bottom bar doesn't cover the content
     },
     bottomBar: {
       width: '100vw',
@@ -24,13 +29,40 @@ const useStyles = makeStyles(theme => {
     },
     mainInput: {
       backgroundColor: theme.palette.secondary.main,
-      width: widthMinusMargin,
-      margin: 'auto', // left and right
-      marginBottom: margin,
-      marginTop: margin
+      marginLeft: marginSmall,
+      marginRight: marginSmall,
+      marginTop: marginSmall,
+      marginBottom: marginSmall
     }
   }
 });
+
+function TopBar () {
+  return (
+    <Fragment>
+      {/* TODO: do something other than sticky with more cross compatibility? */}
+      <AppBar position="fixed">
+        <Toolbar>
+          <Typography variant="h6">
+            Journo - Newspaper
+          </Typography>
+        </Toolbar>
+      </AppBar>
+      <Toolbar /> {/* so that app bar doesn't cover top of content */}
+    </Fragment>
+  );
+}
+
+function Content () {
+  const classes = useStyles();
+  return (
+    <Box className={classes.content}>
+      <Typography>
+        {new Story(storyContent).ContinueMaximally()}
+      </Typography>
+    </Box>
+  );
+}
 
 function BottomBar () {
   const classes = useStyles();
@@ -45,14 +77,9 @@ function BottomBar () {
   );
 }
 
-export default function App () {
-  const classes = useStyles();
-  return (
-    <Box className={classes.app}>
-      <Typography variant="h4" component="h1" gutterBottom>
-        {new Story(storyContent).ContinueMaximally()}
-      </Typography>
-      <BottomBar />
-    </Box>
-  );
-}
+export default () =>
+  <Fragment>
+    <TopBar />
+    <Content />
+    <BottomBar />
+  </Fragment>
