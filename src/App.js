@@ -23,7 +23,7 @@ const useStyles = makeStyles(theme => {
       bottom: 0
     },
     mainInput: {
-      backgroundColor: theme.palette.primary.main,
+      backgroundColor: theme.palette.secondary.main,
       width: widthMinusMargin,
       margin: 'auto', // left and right
       marginBottom: margin,
