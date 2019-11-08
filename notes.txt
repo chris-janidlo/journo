@@ -1,7 +1,5 @@
 TODO:s
 	add an indication of what organization you're a reporter for
-	update elapsed_time ink variable in js somewhere
-		if there's a clock component do it there otherwise probably do it from index.js
 	figure out good way to implement interrupting/waiting
 
 outline from outer space

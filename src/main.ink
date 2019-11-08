@@ -4,7 +4,12 @@
 ->intro
 
 // interface between js and ink
-VAR elapsed_time_seconds = 0.0 // read-only in ink, js should update this
+
+// note: may not be totally accurate; see https://github.com/inkle/ink/blob/master/Documentation/RunningYourInk.md#external-functions
+EXTERNAL get_elapsed_seconds()
+// fallback
+== function get_elapsed_seconds ==
+~ return 0
 
 
 
