@@ -1,12 +1,17 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import {
-  Box,
+  List,
+  ListItem,
+  Divider,
   Typography,
   makeStyles,
 } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => {
   return {
+    message: {
+      margin: theme.spacing(1)
+    },
     messages: {
       marginLeft: theme.spacing(3),
       marginRight: theme.spacing(3),
@@ -16,13 +21,38 @@ const useStyles = makeStyles(theme => {
   }
 });
 
-export function Messages (props) {
+function Message (props) {
   const classes = useStyles();
   return (
-    <Box className={classes.messages}>
-      <Typography>
-        {props.story.ContinueMaximally()}
+    <ListItem>
+      <Typography className={classes.message}>
+        {props.children}
       </Typography>
-    </Box>
+    </ListItem>
+  )
+}
+
+export function Messages (props) {
+  const classes = useStyles();
+
+  const firstLine = props.story.Continue();
+  const lines = [];
+
+  while (props.story.canContinue) {
+    lines.push(props.story.Continue());
+  }
+
+  return (
+    <List className={classes.messages}>
+      <Message>{firstLine}</Message>
+      {lines.map(l => {
+        return (
+          <Fragment>
+            <Divider />
+            <Message>{l}</Message>
+          </Fragment>
+        );
+      })}
+    </List>
   );
 }
