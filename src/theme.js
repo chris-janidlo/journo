@@ -13,4 +13,7 @@ export const theme = createMuiTheme({
       dark: '#9499b7'
     }
   },
+  shape: {
+    borderRadius: Number.MAX_SAFE_INTEGER // round the hell out of those corners
+  }
 });
