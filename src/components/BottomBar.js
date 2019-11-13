@@ -75,7 +75,8 @@ function Prompt (props) {
 		for (let i = 0; i < targetSymbols.length; i++) {
 			if (i < inputSymbols.length && arrayStartsWith(targetSymbols, inputSymbols.slice(0, i + 1))) {
 				sharedLength++;
-				textElements.push(<ColoredText text={inputSymbols[i]} color='textPrimary' />);
+				textElements.push(<ColoredText text={inputSymbols[i]} color='initial' />);
+				props.setTypo(false);
 			}
 			else {
 				if (sharedLength !== n) {
@@ -89,16 +90,18 @@ function Prompt (props) {
 				else if (inputSymbols.length > i) {
 					// this prompt has the most shared characters with the input, but the input has some amount of additional characters that aren't shared; those must be typos
 					textElements.push(<ColoredText text={inputSymbols[i]} color='error' />);
+					props.setTypo(true);
 				}
 				else {
 					// this prompt has the most shared characters with the input, and we've exhausted the input but still have more target characters. color those in grey since we still need to type them
-					textElements.push(<ColoredText text={targetSymbols[i]} color='textSecondary' />);
+					textElements.push(<ColoredText text={targetSymbols[i]} color='secondary' />);
 				}
 			}
 		}
 		// handle any extra input characters
 		for (let i = targetSymbols.length; i < inputSymbols.length; i++) {
 			textElements.push(<ColoredText text={inputSymbols[i]} color='error' />);
+			props.setTypo(true);
 		}
 	}
 
@@ -107,7 +110,7 @@ function Prompt (props) {
 			<Typography>
 				{
 					greyed
-						? <ColoredText text={targetSymbols} color='textSecondary' />
+						? <ColoredText text={targetSymbols} color='secondary' />
 						: textElements
 				}
 			</Typography>
@@ -115,7 +118,7 @@ function Prompt (props) {
 	);
 }
 
-// TODO: change to only highligh incorrect characters? ie if the prompt is 'the cat' and the input is 'teh cat' only highlight 'eh' and not 'cat'
+// FIXME: case where one prompt is a strict substring of another. ie if one is 'open' and another is 'opened', typing 'opened' will result in appending a red 'ed' to the 'open'
 // prompt highlighting algorithm:
 	// if inputLength is 0: color every prompt in grey.
 	// else:
@@ -132,10 +135,8 @@ function Prompts (props) {
 	const choices = props.choices;
 	if (!Array.isArray(choices) || !choices.length) return null;
 
-	const choiceTexts = choices.map(c => c.text);
-
-	const firstPrompt = choiceTexts[0];
-	const prompts = choiceTexts.slice(1);
+	const firstPrompt = choices[0];
+	const prompts = choices.slice(1);
 
 	const inputSymbols = [...props.inputText]; // in case input contains unicode (https://stackoverflow.com/q/46157867/5931898)
 
@@ -143,10 +144,13 @@ function Prompts (props) {
 
 	if (inputSymbols.length !== 0) {
 		for (let i = 0; i < inputSymbols.length; i++) {
-			if (choiceTexts.some(p => arrayStartsWith([...p], inputSymbols.slice(0, i + 1)))) {
+			if (choices.some(p => arrayStartsWith([...p], inputSymbols.slice(0, i + 1)))) {
 				longestStartsWithLength = i + 1;
 			}
 		}
+	}
+	else {
+		props.setTypo(false);
 	}
 
 	return (
@@ -156,6 +160,7 @@ function Prompts (props) {
 					longestStartsWithLength={longestStartsWithLength}
 					inputSymbols={inputSymbols}
 					targetSymbols={[...firstPrompt]}
+					setTypo={props.setTypo}
 				/>
 				{prompts.map(p =>
 					<Fragment>
@@ -164,6 +169,7 @@ function Prompts (props) {
 							longestStartsWithLength={longestStartsWithLength}
 							inputSymbols={inputSymbols}
 							targetSymbols={[...p]}
+							setTypo={props.setTypo}
 						/>
 					</Fragment>
 				)}
@@ -181,6 +187,8 @@ function Input (props) {
 			variant='outlined'
 			margin='dense'
 			placeholder='Say something...'
+			error={props.typo}
+			onKeyPress={props.onKeyPress}
 			onChange={o => props.onChange(o.target.value)}
 		/>
 	);
@@ -190,11 +198,23 @@ export function BottomBar (props) {
 	const classes = useStyles();
 	
 	const [inputText, setInputText] = useState('');
+	const [typo, setTypo] = useState(false);
+
+	function onKeyPress (e) {
+		if (e.key !== 'Enter') return;
+
+		if (props.choices.includes(inputText)) {
+			props.makeChoice(props.choices.indexOf(inputText));
+		}
+		else {
+			setTypo(true);
+		}
+	}
 
   return (
     <Paper className={classes.bottomBar} elevation={4} square>
-			<Prompts choices={props.story.currentChoices} inputText={inputText}/>
-			<Input onChange={setInputText}/>
+			<Prompts choices={props.choices} inputText={inputText} setTypo={setTypo} />
+			<Input onChange={setInputText} onKeyPress={onKeyPress} typo={typo} />
     </Paper>
   );
 }

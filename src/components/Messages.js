@@ -35,21 +35,17 @@ function Message (props) {
 export function Messages (props) {
   const classes = useStyles();
 
-  const firstLine = props.story.Continue();
-  const lines = [];
-
-  while (props.story.canContinue) {
-    lines.push(props.story.Continue());
-  }
+  const firstLine = props.lines[0];
+  const lines = props.lines.slice(1);
 
   return (
     <List className={classes.messages}>
-      <Message>{firstLine}</Message>
+      <Message>{firstLine.text}</Message>
       {lines.map(l => {
         return (
           <Fragment>
             <Divider />
-            <Message>{l}</Message>
+            <Message>{l.text}</Message>
           </Fragment>
         );
       })}
