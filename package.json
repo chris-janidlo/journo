@@ -15,7 +15,8 @@
     "inkjs": "^1.8.0-beta.1",
     "react": "latest",
     "react-dom": "latest",
-    "react-scripts": "latest"
+    "react-scripts": "latest",
+    "react-scrollable-feed": "^1.1.0"
   },
   "browserslist": {
     "production": [

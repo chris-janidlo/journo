@@ -1,6 +1,6 @@
-import React, { Fragment } from 'react';
+import React from 'react';
+import ScrollableFeed from 'react-scrollable-feed';
 import {
-  List,
   ListItem,
   Divider,
   Typography,
@@ -8,15 +8,16 @@ import {
 } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => {
+  // update these if you ever change the top or bottom bars
+  const topBarHeight = 64;
+  const bottomBarHeight = 129;
+
   return {
     message: {
       margin: theme.spacing(1)
     },
     messages: {
-      marginLeft: theme.spacing(3),
-      marginRight: theme.spacing(3),
-      marginTop: theme.spacing(2),
-      marginBottom: 80 // manually adjust this so that the bottom bar doesn't cover the content
+      height: `calc(100vh - ${topBarHeight}px - ${bottomBarHeight}px)`
     }
   }
 });
@@ -38,17 +39,19 @@ export function Messages (props) {
   const firstLine = props.lines[0];
   const lines = props.lines.slice(1);
 
+  let index = 0;
+
   return (
-    <List className={classes.messages}>
-      <Message>{firstLine.text}</Message>
+    <ScrollableFeed className={classes.messages}>
+      <Message key={index++}>{firstLine.text}</Message>
       {lines.map(l => {
         return (
-          <Fragment>
+          <div key={index++}>
             <Divider />
             <Message>{l.text}</Message>
-          </Fragment>
+          </div>
         );
       })}
-    </List>
+    </ScrollableFeed>
   );
 }
