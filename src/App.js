@@ -1,4 +1,7 @@
-import React, { Fragment } from 'react';
+import React from 'react';
+import { CssBaseline } from '@material-ui/core';
+import { ThemeProvider } from '@material-ui/core/styles';
+import { theme } from './theme';
 import { TopBar } from './components/TopBar';
 import { Messages } from './components/Messages';
 import { BottomBar } from './components/BottomBar';
@@ -34,11 +37,12 @@ export class App extends React.Component {
 
   render () {
     return (
-      <Fragment>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
         <TopBar />
         <Messages lines={this.state.lines} />
         <BottomBar choices={this.state.choices} makeChoice={this.makeChoice} />
-      </Fragment>
+      </ThemeProvider>
     );
   }
 
