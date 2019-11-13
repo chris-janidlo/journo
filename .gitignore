@@ -16,7 +16,7 @@
 /.vscode
 
 # ink build output
-/src/story.json
+/src/story/content.json
 
 # misc
 .DS_Store

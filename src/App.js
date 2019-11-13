@@ -1,35 +1,12 @@
 import React, { Fragment } from 'react';
-import storyContent from './story.json';
-import { Story } from 'inkjs';
 import { TopBar } from './components/TopBar';
 import { Messages } from './components/Messages';
 import { BottomBar } from './components/BottomBar';
-
-const story = new Story(storyContent);
-
-function getLines () {
-  const lines = [];
-  while (story.canContinue) {
-    const text = story.Continue();
-    lines.push({
-      text,
-      tags: story.currentTags
-    });
-  }
-  return lines;
-}
-
-function getChoices () {
-  return story.currentChoices.map(c => c.text);
-}
-
-const _startTime = new Date();
-story.BindExternalFunction("get_elapsed_seconds", () => {
-  const currentTime = new Date();
-  return Math.floor((currentTime - _startTime) / 1000);
-});
-
-
+import {
+  getLines,
+  getChoices,
+  makeChoice
+} from './story';
 
 export class App extends React.Component {
 
@@ -45,7 +22,7 @@ export class App extends React.Component {
   }
 
   makeChoice (choiceIndex) {
-    story.ChooseChoiceIndex(choiceIndex);
+    makeChoice(choiceIndex);
 
     this.setState((state) => {
       return {
