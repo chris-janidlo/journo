@@ -21,10 +21,10 @@ export class App extends React.Component {
       choices: getChoices()
     }
 
-    this.makeChoice = this.makeChoice.bind(this);
+    this.makeChoiceAndUpdateState = this.makeChoiceAndUpdateState.bind(this);
   }
 
-  makeChoice (choiceIndex) {
+  makeChoiceAndUpdateState (choiceIndex) {
     makeChoice(choiceIndex);
 
     this.setState((state) => {
@@ -41,7 +41,7 @@ export class App extends React.Component {
         <CssBaseline />
         <TopBar />
         <Messages lines={this.state.lines} />
-        <BottomBar choices={this.state.choices} makeChoice={this.makeChoice} />
+        <BottomBar choices={this.state.choices} makeChoice={this.makeChoiceAndUpdateState} />
       </ThemeProvider>
     );
   }
