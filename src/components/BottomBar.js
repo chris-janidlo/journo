@@ -112,10 +112,13 @@ function Prompt (props) {
 				}
 			}
 		}
-		// handle any extra input characters
-		for (let i = targetSymbols.length; i < inputSymbols.length; i++) {
-			textElements.push(<ColoredText key={i} text={inputSymbols[i]} color='error' />);
-			props.setTypo(true);
+
+		if (!greyed) {
+			// handle any extra input characters
+			for (let i = targetSymbols.length; i < inputSymbols.length; i++) {
+				textElements.push(<ColoredText key={i} text={inputSymbols[i]} color='error' />);
+				props.setTypo(true);
+			}
 		}
 	}
 
