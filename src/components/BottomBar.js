@@ -207,6 +207,20 @@ function Prompts (props) {
 
 function Input (props) {
 	const classes = useStyles();
+
+	const [text, setText] = useState('');
+
+	function onKeyPress (e) {
+		if (e.key !== 'Enter') return;
+
+		const madeChoce = props.tryMakeChoice();
+
+		if (madeChoce) {
+			setText('');
+			props.onChange('');
+		}
+	}
+
 	return (
 		<TextField
 			className={classes.input}
@@ -214,8 +228,13 @@ function Input (props) {
 			margin='dense'
 			placeholder='Say something...'
 			error={props.typo}
-			onKeyPress={props.onKeyPress}
-			onChange={o => props.onChange(o.target.value)}
+			onKeyPress={onKeyPress}
+			value={text}
+			onChange={o => {
+				const value = o.target.value;
+				props.onChange(value);
+				setText(value);
+			}}
 		/>
 	);
 }
@@ -226,21 +245,31 @@ export function BottomBar (props) {
 	const [inputText, setInputText] = useState('');
 	const [typo, setTypo] = useState(false);
 
-	function onKeyPress (e) {
-		if (e.key !== 'Enter') return;
+	function tryMakeChoice () {
+		const valid = props.choices.includes(inputText);
 
-		if (props.choices.includes(inputText)) {
+		if (valid) {
 			props.makeChoice(props.choices.indexOf(inputText));
 		}
 		else {
 			setTypo(true);
 		}
+
+		return valid;
 	}
 
   return (
     <Paper className={classes.bottomBar} elevation={4} square>
-			<Prompts choices={props.choices} inputText={inputText} setTypo={setTypo} />
-			<Input onChange={setInputText} onKeyPress={onKeyPress} typo={typo} />
+			<Prompts
+				choices={props.choices}
+				inputText={inputText}
+				setTypo={setTypo}
+			/>
+			<Input
+				onChange={setInputText}
+				tryMakeChoice={tryMakeChoice}
+				typo={typo}
+			/>
     </Paper>
   );
 }
