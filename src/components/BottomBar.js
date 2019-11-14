@@ -32,7 +32,7 @@ const useStyles = makeStyles(theme => {
 			paddingBottom: margin,
 			marginTop: theme.spacing(1.5)
 		},
-		prompt: {
+		tableCell: {
 			whiteSpace: 'nowrap',
 			padding: 0
 		}
@@ -88,7 +88,7 @@ function Prompt (props) {
 		for (let i = 0; i < targetSymbols.length; i++) {
 			if (i < inputSymbols.length && arrayStartsWith(targetSymbols, inputSymbols.slice(0, i + 1))) {
 				sharedLength++;
-				textElements.push(<ColoredText text={inputSymbols[i]} color='initial' />);
+				textElements.push(<ColoredText key={i} text={inputSymbols[i]} color='initial' />);
 				props.setTypo(false);
 			}
 			else {
@@ -102,24 +102,24 @@ function Prompt (props) {
 				}
 				else if (inputSymbols.length > i) {
 					// this prompt has the most shared characters with the input, but the input has some amount of additional characters that aren't shared; those must be typos
-					textElements.push(<ColoredText text={inputSymbols[i]} color='error' />);
+					textElements.push(<ColoredText key={i} text={inputSymbols[i]} color='error' />);
 					props.setTypo(true);
 				}
 				else {
 					// this prompt has the most shared characters with the input, and we've exhausted the input but still have more target characters. color those in grey since we still need to type them
-					textElements.push(<ColoredText text={targetSymbols[i]} color='secondary' />);
+					textElements.push(<ColoredText key={i} text={targetSymbols[i]} color='secondary' />);
 				}
 			}
 		}
 		// handle any extra input characters
 		for (let i = targetSymbols.length; i < inputSymbols.length; i++) {
-			textElements.push(<ColoredText text={inputSymbols[i]} color='error' />);
+			textElements.push(<ColoredText key={i} text={inputSymbols[i]} color='error' />);
 			props.setTypo(true);
 		}
 	}
 
 	return (
-		<TableCell className={classes.prompt}>
+		<TableCell className={classes.tableCell}>
 			<Typography align='center'>
 				{
 					greyed
@@ -166,6 +166,8 @@ function Prompts (props) {
 		props.setTypo(false);
 	}
 
+	let index=0;
+
 	return (
 		<Container>
 			<Box className={classes.promptList}>
@@ -174,20 +176,24 @@ function Prompts (props) {
 					<TableBody>
 						<TableRow>
 							<Prompt
+								key={index++}
 								longestStartsWithLength={longestStartsWithLength}
 								inputSymbols={inputSymbols}
 								targetSymbols={[...firstPrompt]}
 								setTypo={props.setTypo}
 							/>
 							{prompts.map(p =>
-								<Fragment>
-									&emsp; {/* tab character for spacing */}
+								<Fragment key={index++}>
+									{/* spacing table cell; creates break in lines underneath prompts */}
+									<TableCell style={{borderBottom:'none'}} className={classes.tableCell}>
+										&ensp;
+									</TableCell>
 									<Prompt
 										longestStartsWithLength={longestStartsWithLength}
 										inputSymbols={inputSymbols}
 										targetSymbols={[...p]}
 										setTypo={props.setTypo}
-										/>
+									/>
 								</Fragment>
 							)}
 						</TableRow>
