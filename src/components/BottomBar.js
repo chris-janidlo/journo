@@ -2,10 +2,13 @@ import React, { Fragment, useState } from 'react';
 import {
 	Paper,
 	TextField,
-	List,
-	ListItem,
+	Box,
+	Table,
+	TableBody,
+	TableRow,
+	TableCell,
+	Container,
 	Typography,
-	Divider,
 	makeStyles
 } from '@material-ui/core';
 
@@ -20,8 +23,18 @@ const useStyles = makeStyles(theme => {
 		input: {
 			width: `calc(100vw - ${2 * margin}px)`,
 			margin: margin,
+			marginTop: theme.spacing(.5),
 			borderRadius: theme.shape.borderRadius,
 			backgroundColor: '#f2f2f2',
+		},
+		promptList: {
+			overflowX: 'scroll',
+			paddingBottom: margin,
+			marginTop: theme.spacing(1.5)
+		},
+		prompt: {
+			whiteSpace: 'nowrap',
+			padding: 0
 		}
 	}
 });
@@ -106,15 +119,15 @@ function Prompt (props) {
 	}
 
 	return (
-		<ListItem>
-			<Typography>
+		<TableCell className={classes.prompt}>
+			<Typography align='center'>
 				{
 					greyed
 						? <ColoredText text={targetSymbols} color='secondary' />
 						: textElements
 				}
 			</Typography>
-		</ListItem>
+		</TableCell>
 	);
 }
 
@@ -154,28 +167,34 @@ function Prompts (props) {
 	}
 
 	return (
-		<Fragment>
-			<List>
-				<Prompt
-					longestStartsWithLength={longestStartsWithLength}
-					inputSymbols={inputSymbols}
-					targetSymbols={[...firstPrompt]}
-					setTypo={props.setTypo}
-				/>
-				{prompts.map(p =>
-					<Fragment>
-						<Divider />
-						<Prompt
-							longestStartsWithLength={longestStartsWithLength}
-							inputSymbols={inputSymbols}
-							targetSymbols={[...p]}
-							setTypo={props.setTypo}
-						/>
-					</Fragment>
-				)}
-			</List>
-			<Divider />
-		</Fragment>
+		<Container>
+			<Box className={classes.promptList}>
+				{/* use table for auto spacing and for the nice lines underneath */}
+				<Table>
+					<TableBody>
+						<TableRow>
+							<Prompt
+								longestStartsWithLength={longestStartsWithLength}
+								inputSymbols={inputSymbols}
+								targetSymbols={[...firstPrompt]}
+								setTypo={props.setTypo}
+							/>
+							{prompts.map(p =>
+								<Fragment>
+									&emsp; {/* tab character for spacing */}
+									<Prompt
+										longestStartsWithLength={longestStartsWithLength}
+										inputSymbols={inputSymbols}
+										targetSymbols={[...p]}
+										setTypo={props.setTypo}
+										/>
+								</Fragment>
+							)}
+						</TableRow>
+					</TableBody>
+				</Table>
+			</Box>
+		</Container>
 	);
 }
 
