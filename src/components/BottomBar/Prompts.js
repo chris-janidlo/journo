@@ -1,35 +1,20 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment } from 'react';
 import {
-	Paper,
-	TextField,
 	Box,
+	Container,
+	Typography,
 	Table,
 	TableBody,
 	TableRow,
 	TableCell,
-	Container,
-	Typography,
 	makeStyles
 } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => {
-	const margin = theme.spacing(2);
   return {
-		bottomBar: {
-			width: '100vw',
-			position: 'fixed',
-			bottom: 0
-		},
-		input: {
-			width: `calc(100vw - ${2 * margin}px)`,
-			margin: margin,
-			marginTop: theme.spacing(.5),
-			borderRadius: theme.shape.borderRadius,
-			backgroundColor: '#f2f2f2',
-		},
 		promptList: {
 			overflowX: 'scroll',
-			paddingBottom: margin,
+			paddingBottom: theme.spacing(2),
 			marginTop: theme.spacing(1.5)
 		},
 		tableCell: {
@@ -38,6 +23,16 @@ const useStyles = makeStyles(theme => {
 		}
 	}
 });
+
+// prompt highlighting algorithm:
+	// if inputLength is 0: color every prompt in grey.
+	// else:
+		// determine which prompt(s) starts with the most characters from the input - call that number n.
+		// for the prompt(s) that share the first n characters with the input:
+			// color the first n characters in black.
+			// if the input is exactly n characters: color the rest of the characters grey.
+			// else: color the next (inputLength - n) characters red.
+		// for the prompt(s) that do not share the first n characters, color every character grey.
 
 function arrayStartsWith (first, second) {
 	for (let i = 0; i < second.length; i++) {
@@ -135,18 +130,7 @@ function Prompt (props) {
 	);
 }
 
-// FIXME: case where one prompt is a strict substring of another. ie if one is 'open' and another is 'opened', typing 'opened' will result in appending a red 'ed' to the 'open'
-// prompt highlighting algorithm:
-	// if inputLength is 0: color every prompt in grey.
-	// else:
-		// determine which prompt(s) starts with the most characters from the input - call that number n.
-		// for the prompt(s) that share the first n characters with the input:
-			// color the first n characters in black.
-			// if the input is exactly n characters: color the rest of the characters grey.
-			// else: color the next (inputLength - n) characters red.
-		// for the prompt(s) that do not share the first n characters, color every character grey.
-
-function Prompts (props) {
+export function Prompts (props) {
 	const classes = useStyles();
 
 	const choices = props.choices;
@@ -206,73 +190,4 @@ function Prompts (props) {
 			</Box>
 		</Container>
 	);
-}
-
-function Input (props) {
-	const classes = useStyles();
-
-	const [text, setText] = useState('');
-
-	function onKeyPress (e) {
-		if (e.key !== 'Enter') return;
-
-		const madeChoce = props.tryMakeChoice();
-
-		if (madeChoce) {
-			setText('');
-			props.onChange('');
-		}
-	}
-
-	return (
-		<TextField
-			className={classes.input}
-			variant='outlined'
-			margin='dense'
-			placeholder='Say something...'
-			error={props.typo}
-			onKeyPress={onKeyPress}
-			value={text}
-			onChange={o => {
-				const value = o.target.value;
-				props.onChange(value);
-				setText(value);
-			}}
-		/>
-	);
-}
-
-export function BottomBar (props) {
-	const classes = useStyles();
-	
-	const [inputText, setInputText] = useState('');
-	const [typo, setTypo] = useState(false);
-
-	function tryMakeChoice () {
-		const valid = props.choices.includes(inputText);
-
-		if (valid) {
-			props.makeChoice(props.choices.indexOf(inputText));
-		}
-		else {
-			setTypo(true);
-		}
-
-		return valid;
-	}
-
-  return (
-    <Paper className={classes.bottomBar} elevation={4} square>
-			<Prompts
-				choices={props.choices}
-				inputText={inputText}
-				setTypo={setTypo}
-			/>
-			<Input
-				onChange={setInputText}
-				tryMakeChoice={tryMakeChoice}
-				typo={typo}
-			/>
-    </Paper>
-  );
 }
