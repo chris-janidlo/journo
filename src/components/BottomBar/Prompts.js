@@ -77,7 +77,7 @@ function Prompt (props) {
 	let sharedLength = 0;
 	let greyed = false;
 
-	if (inputSymbols.length === 0) {
+	if (inputSymbols.length === 0 || targetSymbols.length < n) {
 		greyed = true;
 	}
 	else {
