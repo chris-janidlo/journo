@@ -53,6 +53,7 @@ export function BottomBar (props) {
 				className={classes.input}
 				variant='outlined'
 				margin='dense'
+				autoFocus
 				placeholder='Say something...'
 				error={typo}
 				onKeyPress={onKeyPress}
