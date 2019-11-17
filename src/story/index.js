@@ -21,6 +21,8 @@ export function getLines () {
       line.tags = parseTags(story.currentTags);
     }
 
+    setMillisecondsToType(line);
+
     lines.push(line);
   }
   return lines;
@@ -35,6 +37,15 @@ function parseTags (tags) {
   return parsed;
 }
 
+function setMillisecondsToType (line) {
+  if (line.fromPlayer) return 0;
+
+  const millisecondsPerCharacter = 12000 / story.variablesState['TRAVIS_WPM'];
+  const scale = ('timescale' in line.tags) ? line.tags.timescale : 1;
+
+  line.millisecondsToType = millisecondsPerCharacter * line.text.length * scale;
+}
+
 export function getChoices () {
   return story.currentChoices.map(c => c.text);
 }
@@ -45,12 +56,3 @@ export function makeChoice (index) {
 }
 
 let lastChoiceText = '';
-
-export function millisecondsToType (line) {
-  if (line.fromPlayer) return 0;
-
-  const millisecondsPerCharacter = 12000 / story.variablesState['TRAVIS_WPM'];
-  const scale = ('timescale' in line.tags) ? line.tags.timescale : 1;
-
-  return millisecondsPerCharacter * line.text.length * scale;
-}

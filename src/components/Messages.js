@@ -1,6 +1,5 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import ScrollableFeed from 'react-scrollable-feed';
-import { millisecondsToType } from '../story';
 import {
   ListItem,
   Divider,
@@ -39,7 +38,7 @@ function Message (props) {
   const [isTyping, setTypingState] = useState(true);
 
   useEffect(() => {
-    setTimeout(() => setTypingState(false), millisecondsToType(props.line));
+    setTimeout(() => setTypingState(false), props.line.millisecondsToType);
   });
 
   return (
