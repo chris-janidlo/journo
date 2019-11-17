@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@material-ui/core": "latest",
+    "@material-ui/icons": "^4.5.1",
     "inkjs": "^1.8.0-beta.1",
     "react": "latest",
     "react-dom": "latest",
