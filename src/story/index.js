@@ -28,10 +28,13 @@ export function getLines () {
   return lines;
 }
 
+const tagsToIgnore = ['author:', 'title:'];
+
 function parseTags (tags) {
   let parsed = {};
   tags.forEach(t => {
     const split = t.split(' ');
+    if (tagsToIgnore.includes(split[0])) return; // skip ignored tags
     // if the tag has an argument, set the key's value to that argument. otherwise, treat the tag as a flag
     parsed[split[0]] = split.length === 2 ? split[1] : true;
   });
