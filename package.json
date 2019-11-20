@@ -4,7 +4,7 @@
   "author": "crass_sandwich",
   "private": true,
   "scripts": {
-    "ink": "./lib/inklecate -p src/main.ink",
+    "ink": "./lib/inklecate -p src/story/main.ink",
     "start": "react-scripts start  &  npx onchange -i src/**/*.ink -- ./lib/inklecate -o src/story/content.json src/story/main.ink",
     "build": "react-scripts build",
     "test": "react-scripts test",
