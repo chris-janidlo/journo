@@ -136,9 +136,6 @@ export function Prompts (props) {
 	const choices = props.choices;
 	if (!Array.isArray(choices) || !choices.length) return null;
 
-	const firstPrompt = choices[0];
-	const prompts = choices.slice(1);
-
 	const inputSymbols = [...props.inputText]; // in case input contains unicode (https://stackoverflow.com/q/46157867/5931898)
 
 	let longestStartsWithLength = 0;
@@ -154,7 +151,14 @@ export function Prompts (props) {
 		props.setTypo(false);
 	}
 
-	let index=0;
+	let index = 0;
+
+	// creates break in line underneath prompts
+	const spacer = (
+		<TableCell style={{borderBottom:'none'}} className={classes.tableCell}>
+			&ensp;
+		</TableCell>
+	);
 
 	return (
 		<Container>
@@ -163,23 +167,13 @@ export function Prompts (props) {
 				<Table>
 					<TableBody>
 						<TableRow>
-							<Prompt
-								key={index++}
-								longestStartsWithLength={longestStartsWithLength}
-								inputSymbols={inputSymbols}
-								targetSymbols={[...firstPrompt]}
-								setTypo={props.setTypo}
-							/>
-							{prompts.map(p =>
+							{choices.map(c =>
 								<Fragment key={index++}>
-									{/* spacing table cell; creates break in lines underneath prompts */}
-									<TableCell style={{borderBottom:'none'}} className={classes.tableCell}>
-										&ensp;
-									</TableCell>
+									{ c === choices[0] ? null : spacer }
 									<Prompt
 										longestStartsWithLength={longestStartsWithLength}
 										inputSymbols={inputSymbols}
-										targetSymbols={[...p]}
+										targetSymbols={[...c]}
 										setTypo={props.setTypo}
 									/>
 								</Fragment>
