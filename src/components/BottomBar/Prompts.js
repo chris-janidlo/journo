@@ -118,14 +118,12 @@ function Prompt (props) {
 	}
 
 	return (
-		<TableCell className={classes.tableCell}>
-			<Typography align='center'>
-				{
-					greyed
-						? <ColoredText text={targetSymbols} color='secondary' />
-						: textElements
-				}
-			</Typography>
+		<TableCell className={classes.tableCell} align='center'>
+			{
+				greyed
+					? <ColoredText text={targetSymbols} color='secondary' />
+					: textElements
+			}
 		</TableCell>
 	);
 }
