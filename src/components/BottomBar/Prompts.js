@@ -65,9 +65,16 @@ function ColoredText (props) {
 	)
 }
 
-function Prompt (props) {
+function PromptTableWrapper (props) {
 	const classes = useStyles();
+	return (
+		<TableCell className={classes.tableCell} align='center'>
+			{props.children}
+		</TableCell>
+	);
+}
 
+function Prompt (props) {
 	const inputSymbols = props.inputSymbols; // player input
 	const targetSymbols = props.targetSymbols; // text for this prompt
 
@@ -118,13 +125,32 @@ function Prompt (props) {
 	}
 
 	return (
-		<TableCell className={classes.tableCell} align='center'>
+		<PromptTableWrapper>
 			{
 				greyed
 					? <ColoredText text={targetSymbols} color='secondary' />
 					: textElements
 			}
-		</TableCell>
+		</PromptTableWrapper>
+	);
+}
+
+function PromptsWrapper (props) {
+	const classes = useStyles();
+
+	return (
+		<Container>
+			<Box className={classes.promptList}>
+				{/* use table for auto spacing and for the nice lines underneath */}
+				<Table>
+					<TableBody>
+						<TableRow>
+							{props.children}
+						</TableRow>
+					</TableBody>
+				</Table>
+			</Box>
+		</Container>
 	);
 }
 
@@ -132,7 +158,15 @@ export function Prompts (props) {
 	const classes = useStyles();
 
 	const choices = props.choices;
-	if (!Array.isArray(choices) || !choices.length) return null;
+	if (!Array.isArray(choices) || !choices.length) {
+		return (
+			<PromptsWrapper>
+				<PromptTableWrapper>
+					<ColoredText text='&ensp;' color='secondary' />
+				</PromptTableWrapper>
+			</PromptsWrapper>
+		);
+	}
 
 	const inputSymbols = [...props.inputText]; // in case input contains unicode (https://stackoverflow.com/q/46157867/5931898)
 
@@ -159,27 +193,18 @@ export function Prompts (props) {
 	);
 
 	return (
-		<Container>
-			<Box className={classes.promptList}>
-				{/* use table for auto spacing and for the nice lines underneath */}
-				<Table>
-					<TableBody>
-						<TableRow>
-							{choices.map(c =>
-								<Fragment key={index++}>
-									{ c === choices[0] ? null : spacer }
-									<Prompt
-										longestStartsWithLength={longestStartsWithLength}
-										inputSymbols={inputSymbols}
-										targetSymbols={[...c]}
-										setTypo={props.setTypo}
-									/>
-								</Fragment>
-							)}
-						</TableRow>
-					</TableBody>
-				</Table>
-			</Box>
-		</Container>
+		<PromptsWrapper>
+			{choices.map(c =>
+				<Fragment key={index++}>
+					{ c === choices[0] ? null : spacer }
+					<Prompt
+						longestStartsWithLength={longestStartsWithLength}
+						inputSymbols={inputSymbols}
+						targetSymbols={[...c]}
+						setTypo={props.setTypo}
+					/>
+				</Fragment>
+			)}
+		</PromptsWrapper>		
 	);
 }
