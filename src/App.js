@@ -18,6 +18,7 @@ export class App extends React.Component {
     this.state = {
       lines: [],
       choices: [],
+      typing: false,
       timeout: null,
       interruptible: false
     }
@@ -48,6 +49,7 @@ export class App extends React.Component {
           // if we were interruptible, then we no longer care about the old choices since we've hit the timeout and are about to choose the .wait option. safe to clear choices out
           // otherwise, set choices to the list we get at the end of Travis content, or the empty list we get in the middle of Travis content
           choices: int ? [] : choices,
+          typing: false,
           timeout: null
         }),
         // (function called after setState has happened, since React can actually set the state whenever it wants)
@@ -64,6 +66,7 @@ export class App extends React.Component {
     
     this.setState({
       choices : int ? choices.filter(c => c !== '.wait') : [],
+      typing: !line.tags.suppressTypingIndicator,
       interruptible: int,
       timeout
     });
@@ -93,7 +96,7 @@ export class App extends React.Component {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <TopBar />
-        <Messages lines={this.state.lines} isTyping={this.state.timeout !== null} />
+        <Messages lines={this.state.lines} isTyping={this.state.typing} />
         <BottomBar choices={this.state.choices} makeChoice={this.makeChoiceAndUpdateState} />
       </ThemeProvider>
     );
