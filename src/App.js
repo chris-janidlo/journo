@@ -43,7 +43,7 @@ export class App extends React.Component {
       this.setState(
         state => ({
           lines: line.text === '.wait'
-            ? state.lines
+            ? state.lines // suppress .wait since the player didn't type it out
             : state.lines.concat(line),
           // if we were interruptible, then we no longer care about the old choices since we've hit the timeout and are about to choose the .wait option. safe to clear choices out
           // otherwise, set choices to the list we get at the end of Travis content, or the empty list we get in the middle of Travis content
