@@ -6,8 +6,7 @@ import { TopBar } from './components/TopBar';
 import { Messages } from './components/Messages';
 import { BottomBar } from './components/BottomBar';
 import {
-  getLines,
-  getChoices,
+  getNextLineAndChoices,
   makeChoice
 } from './story';
 
@@ -17,22 +16,76 @@ export class App extends React.Component {
     super(props);
 
     this.state = {
-      lines: getLines(),
-      choices: getChoices()
+      lines: [],
+      choices: [],
+      timeout: null,
+      interruptible: false
     }
 
     this.makeChoiceAndUpdateState = this.makeChoiceAndUpdateState.bind(this);
+    this.continueStory = this.continueStory.bind(this);
   }
 
-  makeChoiceAndUpdateState (choiceIndex) {
-    makeChoice(choiceIndex);
+  componentDidMount () {
+    this.continueStory();
+  }
 
-    this.setState((state) => {
-      return {
-        lines: state.lines.concat(getLines()),
-        choices: getChoices()
-      };
+  continueStory () {
+    const next = getNextLineAndChoices();
+
+    if (next === null) return;
+
+    const { line, choices } = next;
+    const int = line.tags.interruptible;
+
+    // timeout for Travis to type his shit out
+    const timeout = setTimeout(() => {
+      this.setState(
+        state => ({
+          lines: line.text === '.wait'
+            ? state.lines
+            : state.lines.concat(line),
+          // if we were interruptible, then we no longer care about the old choices since we've hit the timeout and are about to choose the .wait option. safe to clear choices out
+          // otherwise, set choices to the list we get at the end of Travis content, or the empty list we get in the middle of Travis content
+          choices: int ? [] : choices,
+          timeout: null
+        }),
+        // (function called after setState has happened, since React can actually set the state whenever it wants)
+        () => {
+          if (int) {
+            this.makeChoiceAndUpdateState('.wait');
+          }
+          else {
+            this.continueStory();
+          }
+        }
+      );
+    }, line.typingTime);
+    
+    this.setState({
+      choices : int ? choices.filter(c => c !== '.wait') : [],
+      interruptible: int,
+      timeout
     });
+  }
+
+  makeChoiceAndUpdateState (choiceText) {
+    this.setState(
+      state => {
+        if (state.interruptible) {
+          clearTimeout(state.timeout);
+          return {
+            interruptible: false,
+            timeout: null
+          };
+        }
+        return null;
+      },
+      () => {
+        makeChoice(choiceText);
+        this.continueStory();
+      }
+    );
   }
 
   render () {
@@ -40,7 +93,7 @@ export class App extends React.Component {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <TopBar />
-        <Messages lines={this.state.lines} />
+        <Messages lines={this.state.lines} isTyping={this.state.timeout !== null} />
         <BottomBar choices={this.state.choices} makeChoice={this.makeChoiceAndUpdateState} />
       </ThemeProvider>
     );

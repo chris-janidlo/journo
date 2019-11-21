@@ -9,26 +9,32 @@ story.BindExternalFunction("get_elapsed_seconds", () => {
   return Math.floor((currentTime - _startTime) / 1000);
 });
 
-export function getLines () {
-  const lines = [];
-  while (story.canContinue) {
-    const text = story.Continue();
-    const fromPlayer = text.trim() === lastChoiceText.trim();
+function getNextLineAndChoices () {
+  if (!story.canContinue) return null;
 
-    const line = { text, fromPlayer, tags: {} };
+  const line = getLine();
+  const choices = getChoices();
 
-    if (story.currentTags.length !== 0) {
-      line.tags = parseTags(story.currentTags);
-    }
-
-    setMillisecondsToType(line);
-
-    lines.push(line);
-  }
-  return lines;
+  return {
+    line,
+    choices
+  };
 }
 
-const tagsToIgnore = ['author:', 'title:'];
+function getLine () {
+  const text = story.Continue().trim();
+  const fromPlayer = text === lastChoiceText;
+
+  const line = { text, fromPlayer, tags: {}, typingTime: null };
+
+  if (story.currentTags.length !== 0) {
+    line.tags = parseTags(story.currentTags);
+  }
+
+  line.typingTime = millisecondsToType(line);
+
+  return line;
+}
 
 function parseTags (tags) {
   let parsed = {};
@@ -41,22 +47,24 @@ function parseTags (tags) {
   return parsed;
 }
 
-function setMillisecondsToType (line) {
+function millisecondsToType (line) {
   if (line.fromPlayer) return 0;
-
+  
   const millisecondsPerCharacter = 12000 / story.variablesState['TRAVIS_WPM'];
   const scale = ('timescale' in line.tags) ? line.tags.timescale : 1;
-
-  line.millisecondsToType = millisecondsPerCharacter * line.text.length * scale;
+  
+  return millisecondsPerCharacter * line.text.length * scale;
 }
 
-export function getChoices () {
-  return story.currentChoices.map(c => c.text);
-}
+const tagsToIgnore = ['author:', 'title:'];
 
-export function makeChoice (index) {
-  lastChoiceText = story.currentChoices[index].text;
-	story.ChooseChoiceIndex(index);
+const getChoices = () => story.currentChoices.map(c => c.text);
+
+function makeChoice (choiceText) {
+  lastChoiceText = choiceText;
+  story.ChooseChoiceIndex(getChoices().indexOf(choiceText));
 }
 
 let lastChoiceText = '';
+
+export { getNextLineAndChoices, makeChoice };

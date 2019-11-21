@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { Fragment } from 'react';
 import ScrollableFeed from 'react-scrollable-feed';
 import {
   ListItem,
@@ -6,7 +6,6 @@ import {
   Typography,
   makeStyles,
 } from '@material-ui/core';
-import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 
 const useStyles = makeStyles(theme => {
   // update these if you ever change the top or bottom bars
@@ -20,58 +19,68 @@ const useStyles = makeStyles(theme => {
     },
     messages: {
       height: `calc(100vh - ${topBarHeight}px - ${bottomBarHeight}px)`
+    },
+    typingIndicator: {
+      position: 'absolute',
+      left: 0,
+      bottom: bottomBarHeight
     }
   }
 });
 
-function MText (props) {
-  const classes = useStyles();
-
-  return (
-    <Typography className={classes.message} align={props.fromPlayer ? 'right' : 'left'}>
-      {props.text}
-    </Typography>
-  );
-}
-
 function Message (props) {
-  const [isTyping, setTypingState] = useState(true);
-
-  useEffect(() => {
-    setTimeout(() => setTypingState(false), props.line.millisecondsToType);
-  });
-
+  const classes = useStyles();
+    
   return (
     <ListItem>
-      { props.line.fromPlayer
-        ? <MText text={props.line.text} fromPlayer />
-        : isTyping
-          ? <MoreHorizIcon />
-          : <MText text={props.line.text} />
-      }
+      <Typography
+        className={classes.message}
+        align={props.line.fromPlayer ? 'right' : 'left'}
+      >
+        {props.line.text}
+      </Typography>
     </ListItem>
+  )
+}
+
+function TypingIndicator (props) {
+  const classes = useStyles();
+
+  if (!props.active) return null;
+
+  return (
+    <Typography className={classes.typingIndicator} color='secondary'>
+      <i>Travis is typing...</i>
+    </Typography>
   )
 }
 
 export function Messages (props) {
   const classes = useStyles();
 
-  const firstLine = props.lines[0];
-  const lines = props.lines.slice(1);
+  const { lines } = props;
 
+  if (!Array.isArray(lines) || !lines.length) return null;
+
+  const firstLine = lines[0];
+  const otherLines = lines.slice(1);
+  
   let index = 0;
 
   return (
-    <ScrollableFeed className={classes.messages}>
-      <Message key={index++} line={firstLine} />
-      {lines.map(l => {
-        return (
-          <Fragment key={index++}>
-            <Divider />
-            <Message line={l} />
-          </Fragment>
-        );
-      })}
-    </ScrollableFeed>
+    <Fragment>
+      <ScrollableFeed className={classes.messages}>
+        <Message key={index++} line={firstLine} />
+        {otherLines.map(l => {
+          return (
+            <Fragment key={index++}>
+              <Divider />
+              <Message line={l} />
+            </Fragment>
+          );
+        })}
+      </ScrollableFeed>
+      <TypingIndicator active={props.isTyping} />
+    </Fragment>
   );
 }

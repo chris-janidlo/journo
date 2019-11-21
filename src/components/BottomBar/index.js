@@ -34,7 +34,7 @@ export function BottomBar (props) {
 		if (e.key !== 'Enter') return;
 		
 		if (props.choices.includes(inputText)) {
-			props.makeChoice(props.choices.indexOf(inputText));
+			props.makeChoice(inputText);
 			setInputText('');
 		}
 		else {
