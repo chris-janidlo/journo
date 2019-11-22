@@ -7,9 +7,6 @@ import {
   makeStyles,
 } from '@material-ui/core';
 
-// TODO: change message style to 'serious bubble'
-// TODO: style system text at beginning noticeably differently. maybe centered and not in a bubble?
-
 const useStyles = makeStyles(theme => {
   // update these if you ever change the top or bottom bars
   const topBarHeight = 64;

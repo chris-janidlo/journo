@@ -8,7 +8,6 @@ import {
 export function TopBar (props) {
   return (
     <Fragment>
-      {/* TODO: do something other than sticky with more cross compatibility? */}
       <AppBar position="fixed">
         <Toolbar>
           <Typography variant="h6">

@@ -6,8 +6,6 @@ import {
 	makeStyles
 } from '@material-ui/core';
 
-// TODO: clear error out when prompts become empty
-
 const useStyles = makeStyles(theme => {
 	const margin = theme.spacing(2);
   return {
