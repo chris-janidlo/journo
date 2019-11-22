@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { CssBaseline } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/core/styles';
 import { theme } from './theme';
@@ -10,7 +10,7 @@ import {
   makeChoice
 } from './story';
 
-export class App extends React.Component {
+export class App extends Component {
 
   constructor (props) {
     super(props);
