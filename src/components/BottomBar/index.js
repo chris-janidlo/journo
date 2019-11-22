@@ -58,6 +58,7 @@ export function BottomBar (props) {
 				error={typo}
 				onKeyPress={onKeyPress}
 				value={inputText}
+				onPaste={e => e.preventDefault()} // disable paste
 				onChange={o => {
 					setInputText(o.target.value);
 				}}
