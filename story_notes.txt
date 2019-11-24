@@ -35,20 +35,47 @@ whistleblower - Travis Wagner
 		basically a Bofaeockian astronaut - has a "phd," physically fit, years of loyal military service
 		was on the mothership for years working on the master server, but was called down by Zark a couple years ago
 		thinks that manipulating humans without their consent is disgusting, and is conflicted between this and loyalty to superiors/homeworld
+		feels tricked into this job - was promised the opportunity to save his people, but not told that it would involve manipulating billions of people
+		his actual alien personality is a lot more self-doubting, on account of the conflict
 
-initial scoop - project helen
+initial scoop
 	encryption backdoor for us government
+	selling camera/mic data
+	banning all muslims
+	banning political discussions
+	setting up a data server in a nature reserve
+	just fired high-up employee for reporting discriminatory behavior
+	recommending users to be tracked by law enforcement if facebook predicts they will commit a crime
+	intentionally showing depressing content to keep users addicted
+	insider advertising - surfacing ads base on bribes
+	discovered a way to project ads onto the real world
+	shadow-banning all anti-facebook opinions
+	not deleting a pedo group because a high ranking employee is a member
+	top level of organization is a pedo ring
+	turning in low-level drug users to police
+	facebook is buying out MS Windows and replacing it with adware
+	keeping a blacklist of any user with adblock and making the product subtly worse (load time, more negative posts) for those users
+	literally killing puppies
+	literally selling your data - instead of buying ads to target to a demographic, now you can just outright buy a list of people in a demographic or, worse, buy all the details of a specific user
+	building data server on historical site
+	propping up a totalitarian regime because that region has a lot of users
+	making users delete any non-facebook-owned social media accounts in order to use any of their products
+	stealing code from other companies
+	installing adware on operating systems, after users click "ok" on an annoying pop-up
+	calling hit jobs on engineers in competing companies
+	assassinating politician in a region that has recently banned a facebook product
+	if you try to delete your account, all your friends are alerted 
 
 Bofaeock: a brief history
 	highly technologically advanced, centuries beyond humans
-		have developed limited FTL travel based on creating wormholes
-			this requires exact knowledge of the location of your destination
-			the wormhole tunneling method is extremely precise (an error of a few feet can offset the destination by thousands of lightyears) and resource intensive, so scouting teams need to be as certain as possible about their destinations
+		have developed wormhole-based FTL travel, but it's prohibitively expensive
+			requires a shit ton of material resources
+			may require exact knowledge of the location of your destination?
 	once prosperous society, but they depleted their planet
 		Bofaeock is only just barely alive - if they don't leave, they'll die within a generation
 	scouting squad led by Zark Urckbemerg to find inhabitable planets
 	they found that earth was close, and it looked promising
-		when they arrived they realized that it wouldn't work long term due to generally toxic environment (filtering it out would only work short term)
+		when they arrived they realized it wouldn't work long term. TODO: working on why that is
 		however, they realized that they could use humanity as a massive botnet to run their scouting software on
 		established the scouting ship (the mothership) as a base of operations, hanging out disguised in geostationary orbit over area 51
 			us government is aware of Bofaeockians (multiple alien species live on earth with a men-in-black style relationship) but not aware of the botnet
