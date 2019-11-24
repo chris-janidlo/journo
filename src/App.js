@@ -37,7 +37,7 @@ export class App extends Component {
     if (next === null) return;
 
     const { line, choices } = next;
-    const int = line.tags.interruptible;
+    const interruptible = line.tags.interruptible;
 
     // timeout for Travis to type his shit out
     const timeout = setTimeout(() => {
@@ -46,13 +46,13 @@ export class App extends Component {
           lines: state.lines.concat(line),
           // if we were interruptible, then we no longer care about the old choices since we've hit the timeout and are about to choose the .wait option. safe to clear choices out
           // otherwise, set choices to the list we get at the end of Travis content, or the empty list we get in the middle of Travis content
-          choices: int ? [] : choices,
+          choices: interruptible ? [] : choices,
           typing: false,
           timeout: null
         }),
         // (function called after setState has happened, since React can actually set the state whenever it wants)
         () => {
-          if (int) {
+          if (interruptible) {
             this.makeChoiceAndUpdateState('.wait');
           }
           else {
@@ -63,9 +63,9 @@ export class App extends Component {
     }, line.typingTime);
     
     this.setState({
-      choices : int ? choices.filter(c => c !== '.wait') : [],
+      choices : interruptible ? choices.filter(c => c !== '.wait') : [],
       typing: !line.tags.suppressTypingIndicator && !line.fromPlayer,
-      interruptible: int,
+      interruptible: interruptible,
       timeout
     });
   }
@@ -73,14 +73,13 @@ export class App extends Component {
   makeChoiceAndUpdateState (choiceText) {
     this.setState(
       state => {
-        if (state.interruptible) {
-          clearTimeout(state.timeout);
-          return {
-            interruptible: false,
-            timeout: null
-          };
-        }
-        return null;
+        if (!state.interruptible) return null;
+
+        clearTimeout(state.timeout);
+        return {
+          interruptible: false,
+          timeout: null
+        };
       },
       () => {
         makeChoice(choiceText);
