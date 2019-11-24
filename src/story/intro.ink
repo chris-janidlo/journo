@@ -21,13 +21,13 @@ Fantastic, I wasn't expecting this thing to actually work.
 * then why did you use it?
     -> interrupted ->
     I only have 5 minutes since I'm about to leave for a series of high-priority meetings.
-* .wait
+* [.wait]
 
 -After that I'm going on a tech-detox vacation in Thailand for a week. # interruptible
 * 5 minutes is not enough time to verify you as a source
     -> interrupted ->
     You should have reached out earlier. I'm a busy man.
-* .wait
+* [.wait]
     I hope that isn't an issue.
 
 -
