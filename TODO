@@ -3,7 +3,6 @@ global bug and to do list
 FIXME:
 
 TODO:
-change message style to 'serious bubble'
-style system text at beginning noticeably differently. maybe centered and not in a bubble?
 add small delay (~1/3rd of typing time) to start of every message for 'thinking time'
 let users horizontally scroll the prompts using their vertical scroll wheels
+after Travis connects, add indicator in top bar that you're talking with him

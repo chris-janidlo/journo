@@ -60,7 +60,7 @@ function TypingIndicator (props) {
 
   return (
     <Typography className={classes.typingIndicator} color='secondary'>
-      <i>Travis is typing...</i>
+      <i>FbkE7 is typing...</i>
     </Typography>
   )
 }
