@@ -25,10 +25,14 @@ Fantastic, I wasn't expecting this thing to actually work.
 
 -After that I'm going on a tech-detox vacation in Thailand for a week. # interruptible
 * 5 minutes is not enough time to verify you as a source
-    -> interrupted ->
-    You should have reached out earlier. I'm a busy man.
+    -> interrupted -> busy
 * [.wait]
-    I hope that isn't an issue.
+    I hope that isn't an issue. # interruptible
+** 5 minutes is not enough time to verify you as a source
+    -> busy
+
+= busy
+You should have reached out earlier. I'm a busy man.
 
 -
 ->END

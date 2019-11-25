@@ -38,6 +38,7 @@ export class App extends Component {
 
     const { line, choices } = next;
     const interruptible = line.tags.interruptible;
+    const canWait = choices.includes('.wait');
 
     // timeout for Travis to type his shit out
     const timeout = setTimeout(() => {
@@ -46,14 +47,14 @@ export class App extends Component {
           lines: state.lines.concat(line),
           // if we were interruptible, then we no longer care about the old choices since we've hit the timeout and are about to choose the .wait option. safe to clear choices out
           // otherwise, set choices to the list we get at the end of Travis content, or the empty list we get in the middle of Travis content
-          choices: interruptible ? [] : choices,
+          choices: interruptible && canWait ? [] : choices,
           typing: false,
           timeout: null
         }),
         // (function called after setState has happened, since React can actually set the state whenever it wants)
         () => {
           if (interruptible) {
-            this.makeChoiceAndUpdateState('.wait');
+            if (canWait) this.makeChoiceAndUpdateState('.wait');
           }
           else {
             this.continueStory();
