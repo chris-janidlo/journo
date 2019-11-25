@@ -58,7 +58,7 @@ function ColoredText (props) {
 		<Typography
 			component='span'
 			color={props.color}
-			style={{userSelect:'none'}} // make unselectable (TODO: might not work in all browsers)
+			style={{userSelect:'none'}} // make unselectable (might not work in all browsers)
 		>
 			{text}
 		</Typography>
