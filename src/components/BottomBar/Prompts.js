@@ -12,10 +12,12 @@ import {
 
 const useStyles = makeStyles(theme => {
   return {
-		promptList: {
+		promptBox: {
 			overflowX: 'scroll',
-			paddingBottom: theme.spacing(2),
 			marginTop: theme.spacing(1.5)
+		},
+		promptTable: {
+			marginBottom: theme.spacing(.5)
 		},
 		tableCell: {
 			whiteSpace: 'nowrap',
@@ -139,10 +141,10 @@ function PromptsWrapper (props) {
 	const classes = useStyles();
 
 	return (
-		<Container>
-			<Box className={classes.promptList}>
+		<Container maxWidth={false}>
+			<Box className={classes.promptBox}>
 				{/* use table for auto spacing and for the nice lines underneath */}
-				<Table>
+				<Table className={classes.promptTable}>
 					<TableBody>
 						<TableRow>
 							{props.children}
