@@ -1,6 +1,17 @@
 import { Story } from 'inkjs';
 import storyContent from './content.json';
 
+// these tags are never included in a line's metadata
+const tagsToIgnore = [
+  'author:',
+  'title:'
+];
+
+// any time a line's tag matches one of the keys here, we also add every tag in the object associated with that key to the line's metadata
+const impliedTags = {
+  'system': {timescale: 0}
+}
+
 const story = new Story(storyContent);
 
 const _startTime = new Date();
@@ -25,6 +36,7 @@ function getLine () {
   const text = story.Continue().trim();
   const fromPlayer = text === lastChoiceText;
 
+  // we put placeholder values here so that vs code knows what members line has
   const line = { text, fromPlayer, tags: {}, typingTime: null };
 
   if (story.currentTags.length !== 0) {
@@ -39,10 +51,10 @@ function getLine () {
 function parseTags (tags) {
   let parsed = {};
   tags.forEach(t => {
-    const split = t.split(' ');
-    if (tagsToIgnore.includes(split[0])) return; // skip ignored tags
-    // if the tag has an argument, set the key's value to that argument. otherwise, treat the tag as a flag
-    parsed[split[0]] = split.length === 2 ? split[1] : true;
+    const [tag, argument] = t.split(' ');
+    if (tagsToIgnore.includes(tag)) return; // skip ignored tags
+    parsed[tag] = argument === undefined ? true : argument; // if the tag has an argument, set the key's value to that argument. otherwise, treat the tag as a flag
+    Object.assign(parsed, impliedTags[tag]); // copy subTags
   });
   return parsed;
 }
@@ -55,8 +67,6 @@ function millisecondsToType (line) {
   
   return millisecondsPerCharacter * line.text.length * scale;
 }
-
-const tagsToIgnore = ['author:', 'title:'];
 
 const getChoices = () => story.currentChoices.map(c => c.text);
 

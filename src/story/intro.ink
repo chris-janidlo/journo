@@ -1,14 +1,14 @@
 == intro
-You have one new message. Type `open` to open it. # timescale 0 # suppressTypingIndicator
-* open
-    To whom it may concern, # timescale 0 # suppressTypingIndicator
-    I am a senior level Facebook engineer. Facebook is ready to pull the trigger on a terrible choice for user security, and I won't stand for it. I am prepared to go on background to bring the story to the public. Please reach out to me through Journo where I'll be happy to talk about the details. # timescale 0 # suppressTypingIndicator
-    Cheers - Anonymous and Angry Facebook Engineer # timescale 0 # suppressTypingIndicator
-    Type `reply` to reply. # timescale 0 # suppressTypingIndicator
+You have one new message. Type `open` to open it. # system
+* [open]
+    To whom it may concern, # system
+    I am a senior level Facebook engineer. Facebook is ready to pull the trigger on a terrible choice for user security, and I won't stand for it. I am prepared to go on background to bring the story to the public. Please reach out to me through Journo where I'll be happy to talk about the details. # system
+    Cheers - Anonymous and Angry Facebook Engineer # system
+    Type `reply` to reply. # system
 -
-* reply
-Initializing connection with "FbkE7"... # timescale 0 # suppressTypingIndicator
-Done. You are now connected to chat. # timescale 0 # suppressTypingIndicator
+* [reply]
+Initializing connection with "FbkE7"... # system
+Done. You are now connected to chat. # system
 Hello, who is this? -> new_phone_who_dis
 
 = new_phone_who_dis

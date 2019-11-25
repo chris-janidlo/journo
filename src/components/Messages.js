@@ -2,7 +2,6 @@ import React, { Fragment } from 'react';
 import ScrollableFeed from 'react-scrollable-feed';
 import {
   ListItem,
-  Divider,
   Typography,
   makeStyles,
 } from '@material-ui/core';
@@ -30,12 +29,23 @@ const useStyles = makeStyles(theme => {
 
 function Message (props) {
   const classes = useStyles();
-    
+
+  const player = props.line.fromPlayer;
+  const system = props.line.tags.system;
+
+  let align = 'left';
+  if (player) align = 'right';
+  if (system) align = 'center';
+
+  let color = 'initial';
+  if (system) color = 'secondary';
+
   return (
     <ListItem>
       <Typography
         className={classes.message}
-        align={props.line.fromPlayer ? 'right' : 'left'}
+        align={align}
+        color={color}
       >
         {props.line.text}
       </Typography>
@@ -62,23 +72,14 @@ export function Messages (props) {
 
   if (!Array.isArray(lines) || !lines.length) return null;
 
-  const firstLine = lines[0];
-  const otherLines = lines.slice(1);
-  
   let index = 0;
 
   return (
     <Fragment>
       <ScrollableFeed className={classes.messages}>
-        <Message key={index++} line={firstLine} />
-        {otherLines.map(l => {
-          return (
-            <Fragment key={index++}>
-              <Divider />
-              <Message line={l} />
-            </Fragment>
-          );
-        })}
+        {lines.map(l => (
+          <Message key={index++} line={l} />
+        ))}
       </ScrollableFeed>
       <TypingIndicator active={props.isTyping} />
     </Fragment>
