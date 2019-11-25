@@ -3,6 +3,5 @@ global bug and to do list
 FIXME:
 
 TODO:
-remove red input highlight when prompts become empty
 change message style to 'serious bubble'
 style system text at beginning noticeably differently. maybe centered and not in a bubble?

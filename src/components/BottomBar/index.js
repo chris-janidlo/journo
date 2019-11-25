@@ -30,10 +30,24 @@ export function BottomBar (props) {
 	const [inputText, setInputText] = useState('');
 	const [typo, setTypo] = useState(false);
 	
+	const choices = props.choices;
+
+	// if the user hits enter while there are no prompts, then the textfield will remain in an error state until new prompts come in. this function checks if we're in such a state, and if we are, clears the typo state. should only be called where the user is modifying text but not hitting the enter key
+	function clearEmptyEnterTypo () {
+		if (typo && choices.length === 0) setTypo(false);
+	}
+
+	function onKeyDown (e) {
+		if (e.key === 'Backspace') clearEmptyEnterTypo();
+	}
+	
 	function onKeyPress (e) {
-		if (e.key !== 'Enter') return;
+		if (e.key !== 'Enter') {
+			clearEmptyEnterTypo();
+			return;
+		}
 		
-		if (props.choices.includes(inputText)) {
+		if (choices.includes(inputText)) {
 			props.makeChoice(inputText);
 			setInputText('');
 		}
@@ -45,7 +59,7 @@ export function BottomBar (props) {
   return (
     <Paper className={classes.bottomBar} elevation={4} square>
 			<Prompts
-				choices={props.choices}
+				choices={choices}
 				inputText={inputText}
 				setTypo={setTypo}
 			/>
@@ -57,6 +71,7 @@ export function BottomBar (props) {
 				placeholder='Say something...'
 				error={typo}
 				onKeyPress={onKeyPress}
+				onKeyDown={onKeyDown}
 				value={inputText}
 				onPaste={e => e.preventDefault()} // disable paste
 				onChange={o => {
