@@ -6,7 +6,12 @@ EXTERNAL get_elapsed_seconds()
 == function get_elapsed_seconds
 ~ return 0
 
-VAR TRAVIS_WPM = 180
+// words per minute. word = 5 characters
+VAR TRAVIS_WPM = 250
+// thoughts per minute. the amount of 5 character words travis can fully process in one minute. can represent either composing or reading
+VAR TRAVIS_TPM = 540
+// how much to scale follow-up messages in thinking time. to define a follow-up: after the user sends a message, Travis sends one non-follow-up message and any number of follow-up messages.
+VAR FOLLOW_UP_TPM_SCALE = 0.5
 
 == interrupted
 // can count interruptions here if we want Travis to complain about you later

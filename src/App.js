@@ -19,7 +19,7 @@ export class App extends Component {
       lines: [],
       choices: [],
       typing: false,
-      timeout: null,
+      timeouts: [],
       interruptible: false
     }
 
@@ -40,8 +40,7 @@ export class App extends Component {
     const interruptible = line.tags.interruptible;
     const canWait = choices.includes('.wait');
 
-    // timeout for Travis to type his shit out
-    const timeout = setTimeout(() => {
+    const typingTimeout = setTimeout(() => {
       this.setState(
         state => ({
           lines: state.lines.concat(line),
@@ -61,13 +60,17 @@ export class App extends Component {
           }
         }
       );
-    }, line.typingTime);
+    }, line.thinkingTime + line.typingTime);
+
+    const thinkingTimeout = setTimeout(() => {
+      this.setState({typing: !line.tags.suppressTypingIndicator && !line.fromPlayer})
+    }, line.thinkingTime);    
     
     this.setState({
       choices : interruptible ? choices.filter(c => c !== '.wait') : [],
-      typing: !line.tags.suppressTypingIndicator && !line.fromPlayer,
+      typing: false,
       interruptible: interruptible,
-      timeout
+      timeouts: [typingTimeout, thinkingTimeout]
     });
   }
 
@@ -76,10 +79,10 @@ export class App extends Component {
       state => {
         if (!state.interruptible) return null;
 
-        clearTimeout(state.timeout);
+        state.timeouts.forEach(t => clearTimeout(t));
         return {
           interruptible: false,
-          timeout: null
+          timeouts: []
         };
       },
       () => {

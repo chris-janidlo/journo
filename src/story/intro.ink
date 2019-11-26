@@ -24,7 +24,8 @@ Hello, who is this? -> new_phone_who_dis
 * this is Newspaper
     Oh, fantastic, I wasn't expecting this thing to actually work.
 * who are you?
-    Sorry, don't recognize the number, won't share my name. -> new_phone_who_dis
+    Sorry, don't recognize the number, won't share my name.
+    -> new_phone_who_dis
 
 -You caught me at an awkward time though - I absolutely have to leave for a series of meetings starting in 5 minutes. # interruptible
 * then why did you use it?

@@ -9,7 +9,7 @@ const tagsToIgnore = [
 
 // any time a line's tag matches one of the keys here, we also add every tag in the object associated with that key to the line's metadata
 const impliedTags = {
-  'system': {timescale: 0, suppressTypingIndicator: true}
+  'system': { timescale: 0, suppressTypingIndicator: true }
 }
 
 const story = new Story(storyContent);
@@ -26,10 +26,7 @@ function getNextLineAndChoices () {
   const line = getLine();
   const choices = getChoices();
 
-  return {
-    line,
-    choices
-  };
+  return { line, choices };
 }
 
 function getLine () {
@@ -37,13 +34,15 @@ function getLine () {
   const fromPlayer = text === lastChoiceText;
 
   // we put placeholder values here so that vs code knows what members line has
-  const line = { text, fromPlayer, tags: {}, typingTime: null };
+  const line = { text, fromPlayer, tags: {}, typingTime: null, thinkingTime: null };
 
   if (story.currentTags.length !== 0) {
     line.tags = parseTags(story.currentTags);
   }
 
-  line.typingTime = millisecondsToType(line);
+  const { typingTime, thinkingTime } = timings(line);
+  line.typingTime = typingTime;
+  line.thinkingTime = thinkingTime;
 
   return line;
 }
@@ -59,22 +58,33 @@ function parseTags (tags) {
   return parsed;
 }
 
-function millisecondsToType (line) {
-  if (line.fromPlayer) return 0;
+function timings (line) {
+  if (line.fromPlayer) return { typingTime: 0, thinkingTime: 0 };
   
-  const millisecondsPerCharacter = 12000 / story.variablesState['TRAVIS_WPM'];
+  const typingMSPerCharacter = 12000 / story.variablesState['TRAVIS_WPM'];
+  const typingChars = line.text.length;
+
+  const thinkingMSPerCharacter = 12000 / story.variablesState['TRAVIS_TPM'];
+  const thinkingChars = (line.text.length + (justResponded ? lastChoiceText.length : 0)) * (justResponded ? 1 : story.variablesState['FOLLOW_UP_TPM_SCALE']);
+  justResponded = false;
+
   const scale = ('timescale' in line.tags) ? line.tags.timescale : 1;
   
-  return millisecondsPerCharacter * line.text.length * scale;
+  return {
+    typingTime: typingMSPerCharacter * typingChars * scale,
+    thinkingTime: thinkingMSPerCharacter * thinkingChars * scale
+  };
 }
 
 const getChoices = () => story.currentChoices.map(c => c.text);
 
+let lastChoiceText = '';
+let justResponded = false;
+
 function makeChoice (choiceText) {
   lastChoiceText = choiceText;
+  justResponded = true;
   story.ChooseChoiceIndex(getChoices().indexOf(choiceText));
 }
-
-let lastChoiceText = '';
 
 export { getNextLineAndChoices, makeChoice };
