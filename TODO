@@ -3,5 +3,7 @@ global bug and to do list
 FIXME:
 
 TODO:
+actually write some plot
 let users horizontally scroll the prompts using their vertical scroll wheels
 after Travis connects, add indicator in top bar that you're talking with him
+make font look better in Firefox
