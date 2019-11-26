@@ -81,7 +81,7 @@ export function Messages (props) {
           <Message key={index++} line={l} />
         ))}
       </ScrollableFeed>
-      <TypingIndicator active={props.isTyping} user={props.chatPartner} />
+      <TypingIndicator active={props.isTyping} chatPartner={props.chatPartner} />
     </Fragment>
   );
 }
