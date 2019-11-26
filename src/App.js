@@ -65,7 +65,7 @@ export class App extends Component {
     
     this.setState({
       choices : interruptible ? choices.filter(c => c !== '.wait') : [],
-      typing: !line.tags.system && !line.fromPlayer,
+      typing: !line.tags.suppressTypingIndicator && !line.fromPlayer,
       interruptible: interruptible,
       timeout
     });

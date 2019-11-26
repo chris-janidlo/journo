@@ -9,7 +9,7 @@ const tagsToIgnore = [
 
 // any time a line's tag matches one of the keys here, we also add every tag in the object associated with that key to the line's metadata
 const impliedTags = {
-  'system': {timescale: 0}
+  'system': {timescale: 0, suppressTypingIndicator: true}
 }
 
 const story = new Story(storyContent);
