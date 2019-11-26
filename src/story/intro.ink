@@ -1,17 +1,15 @@
 == intro
-You have one unread message. Type `open` to view it. # system
+You have one unread message. Type **open** to view it. # system
 * [open]
     -> message
 
 = message
-To whom it may concern, # timescale 0 # suppressTypingIndicator
-I am a senior level Facebook engineer. Facebook is ready to pull the trigger on a terrible choice for user security, and I won't stand for it. I am prepared to go on background to bring the story to the public. Please reach out to me through Journo where I'll be happy to talk about the details.  # timescale 0 # suppressTypingIndicator
-Cheers - Anonymous and Angry Facebook Engineer # timescale 0 # suppressTypingIndicator
-Type `reply` to start a secure chat session with this user. Type `inbox` to return to your inbox. # system
+To whom it may concern: I am a senior level Facebook engineer. Facebook is ready to pull the trigger on a terrible choice for user security, and I won't stand for it. I am prepared to go on background to bring the story to the public. Please reach out to me through Journo where I'll be happy to talk about the details. Cheers - Anonymous and Angry Facebook Engineer # timescale 0 # suppressTypingIndicator
+Type **reply** to start a secure chat session with this user. Type **inbox** to return to your inbox. # system
 * [reply]
     -> connecting
 + [inbox]
-    You have no unread messages and one message in your inbox. To view your most recent message, type `open`. # system
+    You have no unread messages. You have one message in your inbox. To view your most recent message, type **open**. # system
 ++ [open]
     -> message
 

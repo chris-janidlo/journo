@@ -12,6 +12,5 @@ make prompts monospace
 set up CI/CD
 	figure out why itch.io version is broken
 	configure travis.ci
-allow ink content to be written in markdown and compile that markdown
 figure out if it's possible to suppress tags in inklecate interpreter
 create favicon

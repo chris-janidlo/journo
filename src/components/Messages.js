@@ -5,6 +5,7 @@ import {
   Typography,
   makeStyles,
 } from '@material-ui/core';
+import ReactMarkdown from 'react-markdown';
 
 const useStyles = makeStyles(theme => {
   // update these if you ever change the top or bottom bars
@@ -47,7 +48,7 @@ function Message (props) {
         align={align}
         color={color}
       >
-        {props.line.text}
+        <ReactMarkdown source={props.line.text} />
       </Typography>
     </ListItem>
   )
