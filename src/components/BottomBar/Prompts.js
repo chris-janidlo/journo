@@ -22,6 +22,11 @@ const useStyles = makeStyles(theme => {
 		tableCell: {
 			whiteSpace: 'nowrap',
 			padding: 0
+		},
+		coloredText: {
+			userSelect: 'none', // make unselectable (might not work in all browsers)
+			fontFamily: "'Roboto Mono', monospace",
+			whiteSpace: 'pre'
 		}
 	}
 });
@@ -47,6 +52,8 @@ function arrayStartsWith (first, second) {
 // text can be either a string or array of strings
 // color is the Material UI Typography color attribute
 function ColoredText (props) {
+	const classes = useStyles();
+
 	let text = '';
 
 	if (props.text.isArray) {
@@ -60,7 +67,7 @@ function ColoredText (props) {
 		<Typography
 			component='span'
 			color={props.color}
-			style={{userSelect:'none'}} // make unselectable (might not work in all browsers)
+			className={classes.coloredText}
 		>
 			{text}
 		</Typography>
