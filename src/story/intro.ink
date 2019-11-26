@@ -18,6 +18,7 @@ Type `reply` to start a secure chat session with this user. Type `inbox` to retu
 = connecting
 Initializing connection with "FbkE7"... # system
 Done. You are now connected to chat. # system # timescale .5
+~ connectedUser = "FbkE7"
 Hello, who is this? -> new_phone_who_dis
 
 = new_phone_who_dis

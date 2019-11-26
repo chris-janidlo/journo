@@ -87,4 +87,6 @@ function makeChoice (choiceText) {
   story.ChooseChoiceIndex(getChoices().indexOf(choiceText));
 }
 
-export { getNextLineAndChoices, makeChoice };
+const getChatPartner = () => story.variablesState['connectedUser'];
+
+export { getNextLineAndChoices, makeChoice, getChatPartner };

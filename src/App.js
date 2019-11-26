@@ -7,7 +7,8 @@ import { Messages } from './components/Messages';
 import { BottomBar } from './components/BottomBar';
 import {
   getNextLineAndChoices,
-  makeChoice
+  makeChoice,
+  getChatPartner
 } from './story';
 
 export class App extends Component {
@@ -96,8 +97,8 @@ export class App extends Component {
     return (
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <TopBar />
-        <Messages lines={this.state.lines} isTyping={this.state.typing} />
+        <TopBar chatPartner={getChatPartner()} />
+        <Messages chatPartner={getChatPartner()} lines={this.state.lines} isTyping={this.state.typing} />
         <BottomBar choices={this.state.choices} makeChoice={this.makeChoiceAndUpdateState} />
       </ThemeProvider>
     );

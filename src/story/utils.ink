@@ -13,8 +13,10 @@ VAR TRAVIS_TPM = 540
 // how much to scale follow-up messages in thinking time. to define a follow-up: after the user sends a message, Travis sends one non-follow-up message and any number of follow-up messages.
 VAR FOLLOW_UP_TPM_SCALE = 0.5
 
+// in journo terms, this is the person you're currently chatting with. can be used to de-anonymyze travis after a while
+VAR connectedUser = ""
+
 == interrupted
 // can count interruptions here if we want Travis to complain about you later
 {!Okay, first of all, interrupting someone while they're typing is very rude. It derails the conversation and betrays an ugly impatience.|What did I say about interruptions?|I really wish you would stop interrupting me.|I'm just going to ignore you interrupting me now.}
 ->->
-

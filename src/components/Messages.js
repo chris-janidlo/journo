@@ -60,7 +60,7 @@ function TypingIndicator (props) {
 
   return (
     <Typography className={classes.typingIndicator} color='secondary'>
-      <i>FbkE7 is typing...</i>
+      <i>{props.chatPartner} is typing...</i>
     </Typography>
   )
 }
@@ -81,7 +81,7 @@ export function Messages (props) {
           <Message key={index++} line={l} />
         ))}
       </ScrollableFeed>
-      <TypingIndicator active={props.isTyping} />
+      <TypingIndicator active={props.isTyping} user={props.chatPartner} />
     </Fragment>
   );
 }
