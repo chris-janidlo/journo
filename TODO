@@ -1,6 +1,7 @@
 global bug and to do list
 
 FIXME:
+messages don't stay in view when they first hit the bottom of the screen
 
 TODO:
 actually write some plot
@@ -12,5 +13,4 @@ make prompts monospace
 set up CI/CD
 	figure out why itch.io version is broken
 	configure travis.ci
-figure out if it's possible to suppress tags in inklecate interpreter
 create favicon
