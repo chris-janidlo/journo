@@ -5,9 +5,6 @@ messages don't stay in view when they first hit the bottom of the screen
 text is too heavy in Firefox
 
 TODO:
-set up CI/CD
-	figure out why itch.io version is broken
-	configure travis.ci
 actually write some plot
 figure out what the initial scoop is
 create favicon
