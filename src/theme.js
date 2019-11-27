@@ -17,7 +17,7 @@ export const theme = createMuiTheme({
     }
   },
   shape: {
-    borderRadius: Number.MAX_SAFE_INTEGER // round the hell out of those corners
+    borderRadius: 20
   },
   overrides: {
     MuiCssBaseline: {
