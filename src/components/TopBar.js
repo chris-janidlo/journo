@@ -7,12 +7,12 @@ import {
 
 export function TopBar (props) {
   let title = 'Journo - Newspaper';
-  if (props.chatPartner !== '') title += ` - connected with ${props.chatPartner}`;
+  if (props.chatPartner !== '') title = `Connected with ${props.chatPartner} - ${title}`;
   return (
     <Fragment>
       <AppBar position="fixed" elevation={0}>
         <Toolbar>
-          <Typography style={{width: '100%'}} variant="h6" align='center'>
+          <Typography style={{width: '100%'}} variant="h6" align='center' noWrap>
             {title}
           </Typography>
         </Toolbar>
