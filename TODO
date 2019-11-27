@@ -2,7 +2,6 @@ global bug and to do list
 
 FIXME:
 text input shouldn't autocapitalize or auto correct on mobile
-messages don't stay in view when they first hit the bottom of the screen
 text is too heavy in Firefox
 
 TODO:

@@ -107,7 +107,7 @@ export function Messages (props) {
 
   return (
     <Fragment>
-      <ScrollableFeed className={classes.messages}>
+      <ScrollableFeed className={classes.messages} forceScroll >
         {lines.map(l => l.tags.system
           ? <SystemMessage key={i++} line={l} />
           : <NormalMessage key={i++} line={l} chatPartner={props.chatPartner} />)}
