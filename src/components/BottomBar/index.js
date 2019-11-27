@@ -67,16 +67,16 @@ export function BottomBar (props) {
 				className={classes.input}
 				variant='outlined'
 				margin='dense'
-				autoFocus
 				placeholder='Say something...'
+				autoFocus
+				autoCapitalize={false}
+				autoCorrect={false}
 				error={typo}
+				value={inputText}
 				onKeyPress={onKeyPress}
 				onKeyDown={onKeyDown}
-				value={inputText}
 				onPaste={e => e.preventDefault()} // disable paste
-				onChange={o => {
-					setInputText(o.target.value);
-				}}
+				onChange={e => setInputText(e.target.value)}
 			/>
     </Paper>
   );
