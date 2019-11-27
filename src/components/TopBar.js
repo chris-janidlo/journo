@@ -10,9 +10,9 @@ export function TopBar (props) {
   if (props.chatPartner !== '') title += ` - connected with ${props.chatPartner}`;
   return (
     <Fragment>
-      <AppBar position="fixed">
+      <AppBar position="fixed" elevation={0}>
         <Toolbar>
-          <Typography variant="h6">
+          <Typography style={{width: '100%'}} variant="h6" align='center'>
             {title}
           </Typography>
         </Toolbar>

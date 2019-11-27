@@ -57,7 +57,7 @@ export function BottomBar (props) {
 	}
 
   return (
-    <Paper className={classes.bottomBar} elevation={4} square>
+    <Paper className={classes.bottomBar} elevation={2} square>
 			<Prompts
 				choices={choices}
 				inputText={inputText}
