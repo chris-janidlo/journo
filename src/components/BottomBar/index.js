@@ -63,22 +63,21 @@ export function BottomBar (props) {
 				inputText={inputText}
 				setTypo={setTypo}
 			/>
-			<TextField
-				className={classes.input}
-				variant='outlined'
-				margin='dense'
-				placeholder='Say something...'
-				autoFocus
-				autoCapitalize='none'
-				autoComplete='off'
-				autoCorrect='off'
-				error={typo}
-				value={inputText}
-				onKeyPress={onKeyPress}
-				onKeyDown={onKeyDown}
-				onPaste={e => e.preventDefault()} // disable paste
-				onChange={e => setInputText(e.target.value)}
-			/>
+			<form autoCapitalize='none' autoComplete='off' autoCorrect='off'>
+				<TextField
+					className={classes.input}
+					variant='outlined'
+					margin='dense'
+					placeholder='Say something...'
+					autoFocus
+					error={typo}
+					value={inputText}
+					onKeyPress={onKeyPress}
+					onKeyDown={onKeyDown}
+					onPaste={e => e.preventDefault()} // disable paste
+					onChange={e => setInputText(e.target.value)}
+				/>
+			</form>
     </Paper>
   );
 }
