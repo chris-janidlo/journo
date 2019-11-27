@@ -69,8 +69,8 @@ export function BottomBar (props) {
 				margin='dense'
 				placeholder='Say something...'
 				autoFocus
+				autoCapitalize='none'
 				autoComplete='off'
-				autoCapitalize='off'
 				autoCorrect='off'
 				error={typo}
 				value={inputText}
