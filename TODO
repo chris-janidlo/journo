@@ -5,11 +5,12 @@ messages don't stay in view when they first hit the bottom of the screen
 text is too heavy in Firefox
 
 TODO:
-actually write some plot
-figure out what the initial scoop is
-let users horizontally scroll the prompts using their vertical scroll wheels
 set up CI/CD
 	figure out why itch.io version is broken
 	configure travis.ci
+actually write some plot
+figure out what the initial scoop is
 create favicon
+let users horizontally scroll the prompts using their vertical scroll wheels
+move typing indicator to below textfield
 if prompt is wider than the screen, scroll along the screen as the user types it out
