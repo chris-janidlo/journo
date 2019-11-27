@@ -54,6 +54,8 @@ export function BottomBar (props) {
 		else {
 			setTypo(true);
 		}
+
+		e.preventDefault();
 	}
 
   return (
