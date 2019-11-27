@@ -69,8 +69,9 @@ export function BottomBar (props) {
 				margin='dense'
 				placeholder='Say something...'
 				autoFocus
-				autoCapitalize={false}
-				autoCorrect={false}
+				autoComplete='off'
+				autoCapitalize='off'
+				autoCorrect='off'
 				error={typo}
 				value={inputText}
 				onKeyPress={onKeyPress}
