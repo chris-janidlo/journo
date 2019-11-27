@@ -3,11 +3,13 @@
   "version": "0.0.1",
   "author": "crass_sandwich",
   "private": true,
+  "homepage": ".",
   "scripts": {
     "ink": "./lib/inklecate -p src/story/main.ink",
     "compileInk": "./lib/inklecate -o src/story/content.json src/story/main.ink",
     "start": "react-scripts start  &  npx onchange -i src/**/*.ink -- npm run compileInk",
     "build": "npm run compileInk  &&  react-scripts build",
+    "deploy": "./lib/butler push build crass-sandwich/journo:html",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
