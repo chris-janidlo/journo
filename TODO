@@ -4,8 +4,13 @@ FIXME:
 text is too heavy in Firefox
 
 TODO:
-actually write some plot
+== plot ==
+actually write something
+create "hubworld" file
+make about Travis file
 figure out what the initial scoop is
+
+== code ==
 create favicon
 let users horizontally scroll the prompts using their vertical scroll wheels
 move typing indicator to below textfield
