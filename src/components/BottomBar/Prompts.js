@@ -197,7 +197,7 @@ export function Prompts (props) {
 	// creates break in line underneath prompts
 	const spacer = (
 		<TableCell style={{borderBottom:'none'}} className={classes.tableCell}>
-			&ensp;
+			&emsp;&ensp;
 		</TableCell>
 	);
 
