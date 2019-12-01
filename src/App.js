@@ -6,9 +6,10 @@ import { TopBar } from './components/TopBar';
 import { Messages } from './components/Messages';
 import { BottomBar } from './components/BottomBar';
 import {
-  getNextLineAndChoices,
+  continueStory,
   makeChoice,
-  getChatPartner
+  getStoryVariable,
+  setStoryVariable
 } from './story';
 
 export class App extends Component {
@@ -25,21 +26,20 @@ export class App extends Component {
     }
 
     this.makeChoiceAndUpdateState = this.makeChoiceAndUpdateState.bind(this);
-    this.continueStory = this.continueStory.bind(this);
+    this.continue = this.continue.bind(this);
   }
 
   componentDidMount () {
-    this.continueStory();
+    this.continue();
   }
 
-  continueStory () {
-    const next = getNextLineAndChoices();
+  continue () {
+    const next = continueStory();
 
     if (next === null) return;
 
     const { line, choices } = next;
     const interruptible = line.tags.interruptible;
-    const canWait = choices.includes('.wait');
 
     const typingTimeout = setTimeout(() => {
       this.setState(
@@ -47,17 +47,17 @@ export class App extends Component {
           lines: state.lines.concat(line),
           // if we were interruptible, then we no longer care about the old choices since we've hit the timeout and are about to choose the .wait option. safe to clear choices out
           // otherwise, set choices to the list we get at the end of Travis content, or the empty list we get in the middle of Travis content
-          choices: interruptible && canWait ? [] : choices,
+          choices: interruptible && line.canWait ? [] : choices,
           typing: false,
-          timeout: null
+          timeouts: []
         }),
         // (function called after setState has happened, since React can actually set the state whenever it wants)
         () => {
           if (interruptible) {
-            if (canWait) this.makeChoiceAndUpdateState('.wait');
+            if (line.canWait) this.makeChoiceAndUpdateState('.wait');
           }
           else {
-            this.continueStory();
+            this.continue();
           }
         }
       );
@@ -78,6 +78,7 @@ export class App extends Component {
   makeChoiceAndUpdateState (choiceText) {
     this.setState(
       state => {
+        setStoryVariable('just_interrupted', state.interruptible && state.timeouts.length !== 0);
         if (!state.interruptible) return null;
 
         state.timeouts.forEach(t => clearTimeout(t));
@@ -88,7 +89,7 @@ export class App extends Component {
       },
       () => {
         makeChoice(choiceText);
-        this.continueStory();
+        this.continue();
       }
     );
   }
@@ -97,8 +98,8 @@ export class App extends Component {
     return (
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <TopBar chatPartner={getChatPartner()} />
-        <Messages chatPartner={getChatPartner()} lines={this.state.lines} isTyping={this.state.typing} />
+        <TopBar chatPartner={getStoryVariable('connected_user')} />
+        <Messages chatPartner={getStoryVariable('connected_user')} lines={this.state.lines} isTyping={this.state.typing} />
         <BottomBar choices={this.state.choices} makeChoice={this.makeChoiceAndUpdateState} />
       </ThemeProvider>
     );
