@@ -8,7 +8,7 @@
     ** hey, just doing my due diligence
         *** this will be easier for both of us if you answer my questions
             -> interrupted ->
-            Fair point{just_interrupted:, though}. {alter(total_respect, 2)} <> -> hobbies
+            {just_interrupted:Fair enough, though.|Fair point.} {alter(total_respect, 2)} <> -> hobbies
 * do you have any hobbies?
     Well, <> -> hobbies
 
