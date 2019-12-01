@@ -10,9 +10,14 @@ whistleblower - Travis Wagner
 	eccentric
 		prone to UFO conspiracy theories
 		hobbies
-			flying things - planes, drones
+			sport pilot
+				owns an icon a5
+			drones
 			astronomy
-			interested in freud and other early psychologists?
+				reflector telescope
+				personal observatory setup in backyard
+				chummy with Lick Observatory
+			interest in philosophers and psychologists
 	senior level facebook engineer
 		E7/M2 in facebook system
 			just below director level
@@ -30,6 +35,7 @@ whistleblower - Travis Wagner
 		went to berkeley for bachelors and phd
 		worked a series of startups until being hired to facebook a couple years ago
 		this is all fake, of course, but he only had to convince the people interviewing/hiring him at facebook, and Bofaeockian mind-control tech makes these things easy
+	drives a tesla
 	is actually an alien from the planet Bofaeock
 		TODO: name?
 		basically a Bofaeockian astronaut - has a "phd," physically fit, years of loyal military service
@@ -37,6 +43,18 @@ whistleblower - Travis Wagner
 		thinks that manipulating humans without their consent is disgusting, and is conflicted between this and loyalty to superiors/homeworld
 		feels tricked into this job - was promised the opportunity to save his people, but not told that it would involve manipulating billions of people
 		his actual alien personality is a lot more self-doubting, on account of the conflict
+
+newspaper names
+	spacey-sounding broadsheet
+		zenith news
+		ark news
+		star news
+		starmouth herald
+		the daily star
+		the star daily
+		the daily zenith
+	tech focused news site
+		disrupt news
 
 initial scoop
 	encryption backdoor for us government
