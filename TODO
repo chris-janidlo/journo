@@ -2,15 +2,14 @@ global bug and to do list
 
 FIXME:
 text is too heavy in Firefox
+text is too heavy when connection is bad in Chrome
 
 TODO:
 == plot ==
-actually write something
-create "hubworld" file
-make about Travis file
 figure out what the initial scoop is
 
 == code ==
+implement Travis leaving due to time
 create favicon
 let users horizontally scroll the prompts using their vertical scroll wheels
 move typing indicator to below textfield
