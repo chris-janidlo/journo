@@ -6,6 +6,9 @@ EXTERNAL get_elapsed_seconds()
 == function get_elapsed_seconds
 ~ return 0
 
+== function alter (ref x, k)
+~ x = x + k
+
 // words per minute. word = 5 characters
 VAR TRAVIS_WPM = 250
 // thoughts per minute. the amount of 5 character words travis can fully process in one minute. can represent either composing or reading
@@ -14,9 +17,14 @@ VAR TRAVIS_TPM = 540
 VAR FOLLOW_UP_TPM_SCALE = 0.5
 
 // in journo terms, this is the person you're currently chatting with. can be used to de-anonymyze travis after a while
-VAR connectedUser = ""
+VAR connected_user = ""
+
+VAR total_respect = 10
+
+VAR just_interrupted = false
 
 == interrupted
+{not just_interrupted: ->->}
 // can count interruptions here if we want Travis to complain about you later
-{!Okay, first of all, interrupting someone while they're typing is very rude. It derails the conversation and betrays an ugly impatience.|What did I say about interruptions?|I really wish you would stop interrupting me.|I'm just going to ignore you interrupting me now.}
+{!Ok, first of all, interrupting someone while they're typing is very rude. It derails the conversation and honestly just makes you look impatient.|What did I say about interruptions?|I really wish you would stop interrupting me.|Alright, I'm going to be nice. You get three more interruptions and then I'm out.|Two more interruptions. Use them wisely.|One more interruption before I stop answering any questions.|Last interruption.|Alright, that's it. I can't handle the constant interruptions. Good luck writing your article, you'll need it. -> END}
 ->->

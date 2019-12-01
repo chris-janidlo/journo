@@ -4,7 +4,7 @@ You have one unread message. Type __open__ to view it. # system
     -> message
 
 = message
-_To whom it may concern: I am a senior level Facebook engineer. Facebook is ready to pull the trigger on a terrible choice for user security, and I won't stand for it. I am prepared to go on background to bring the story to the public. Please reach out to me through Journo where I'll be happy to talk about the details. Cheers - Anonymous and Angry Facebook Engineer_ # timescale 0 # suppressTypingIndicator # hideUsername
+_Dear Newspaper: I am a senior Facebook engineer. Facebook is about to make a terrible choice for user security, and I won't stand for it. I am prepared to go on background to bring the story to the public. If you want to know the details, respond to me here and I'll be happy to chat. Cheers - Angry Facebook Engineer_ # timescale 0 # suppressTypingIndicator # hideUsername
 Type __reply__ to start a secure chat session with this user. Type __inbox__ to return to your inbox. # system
 * [reply]
     -> connecting
@@ -16,7 +16,7 @@ Type __reply__ to start a secure chat session with this user. Type __inbox__ to 
 = connecting
 Initializing connection with "FbkE7"... # system
 Done. You are now connected to chat. # system # timescale .5
-~ connectedUser = "FbkE7"
+~ connected_user = "FbkE7"
 Hello, who is this? -> new_phone_who_dis
 
 = new_phone_who_dis
@@ -42,6 +42,15 @@ Hello, who is this? -> new_phone_who_dis
 
 = busy
 You should have reached out earlier. I'm a busy man.
+Well, get to it - I obviously don't have all day. # delay 5
+<- what
+<- hub
+-> DONE
+
+= what
+* get to what?
+    Interviewing me, of course. That's your job, right?
+-> hub
 
 -
 ->END
