@@ -7,7 +7,7 @@
   "scripts": {
     "ink": "./lib/inklecate -p src/story/main.ink",
     "compileInk": "./lib/inklecate -o src/story/content.json src/story/main.ink",
-    "start": "react-scripts start  &  npx onchange -i src/**/*.ink -- npm run compileInk",
+    "start": "npm run compileInk && (react-scripts start  &  npx onchange src/**/*.ink -- npm run compileInk)",
     "build": "npm run compileInk  &&  react-scripts build",
     "deploy": "./lib/butler push build crass-sandwich/journo:html",
     "test": "react-scripts test",
