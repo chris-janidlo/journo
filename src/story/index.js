@@ -14,17 +14,24 @@ const impliedTags = {
 
 const story = new Story(storyContent);
 
-const _startTime = new Date();
+const getVariable = varName => story.variablesState[varName];
+const setVariable = (varName, value) => story.variablesState[varName] = value;
+
+let startTime = null;
 story.BindExternalFunction("get_elapsed_seconds", () => {
   const currentTime = new Date();
-  return Math.floor((currentTime - _startTime) / 1000);
+  const origTime = startTime === null ? currentTime : startTime;
+  return Math.floor((currentTime - origTime) / 1000);
 });
 
-function getNextLineAndChoices () {
+function continueStory () {
   if (!story.canContinue) return null;
 
   const line = getLine();
   const choices = getChoices();
+
+  if (line.tags.startTimer) startTime = new Date();
+  line.canWait = choices.includes('.wait');
 
   return { line, choices };
 }
@@ -34,7 +41,7 @@ function getLine () {
   const fromPlayer = text === lastChoiceText;
 
   // we put placeholder values here so that vs code knows what members line has
-  const line = { text, fromPlayer, tags: {}, typingTime: null, thinkingTime: null };
+  const line = { text, fromPlayer, tags: {}, typingTime: null, thinkingTime: null, canWait: null };
 
   if (story.currentTags.length !== 0) {
     line.tags = parseTags(story.currentTags);
@@ -68,11 +75,12 @@ function timings (line) {
   const thinkingChars = (line.text.length + (justResponded ? lastChoiceText.length : 0)) * (justResponded ? 1 : story.variablesState['FOLLOW_UP_TPM_SCALE']);
   justResponded = false;
 
+  const flatDelay = ('delay' in line.tags) ? line.tags.delay * 1000 : 0;
   const scale = ('timescale' in line.tags) ? line.tags.timescale : 1;
-  
+
   return {
     typingTime: typingMSPerCharacter * typingChars * scale,
-    thinkingTime: thinkingMSPerCharacter * thinkingChars * scale
+    thinkingTime: thinkingMSPerCharacter * thinkingChars * scale + flatDelay
   };
 }
 
@@ -87,6 +95,4 @@ function makeChoice (choiceText) {
   story.ChooseChoiceIndex(getChoices().indexOf(choiceText));
 }
 
-const getChatPartner = () => story.variablesState['connectedUser'];
-
-export { getNextLineAndChoices, makeChoice, getChatPartner };
+export { continueStory, makeChoice, getVariable as getStoryVariable, setVariable as setStoryVariable };
