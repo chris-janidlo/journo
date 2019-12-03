@@ -3,11 +3,13 @@ import { Prompts } from './Prompts';
 import {
 	Paper,
 	TextField,
+	Typography,
 	makeStyles
 } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => {
-	const margin = theme.spacing(2);
+	const inputMargin = theme.spacing(2);
+
   return {
 		bottomBar: {
 			width: '100vw',
@@ -15,14 +17,32 @@ const useStyles = makeStyles(theme => {
 			bottom: 0
 		},
 		input: {
-			width: `calc(100vw - ${2 * margin}px)`,
-			margin: margin,
+			width: `calc(100vw - ${2 * inputMargin}px)`,
+			margin: inputMargin,
 			marginTop: theme.spacing(.5),
+			marginBottom: theme.spacing(3.5),
 			borderRadius: theme.shape.borderRadius,
 			backgroundColor: '#f2f2f2',
-		}
+		},
+    typingIndicator: {
+      position: 'absolute',
+      left: inputMargin,
+      bottom: theme.spacing(.5)
+    }
 	}
 });
+
+function TypingIndicator (props) {
+	const classes = useStyles();
+
+  if (!props.active) return null;
+
+  return (
+    <Typography className={classes.typingIndicator} color='secondary'>
+      <i>{props.chatPartner} is typing...</i>
+    </Typography>
+  )
+}
 
 export function BottomBar (props) {
 	const classes = useStyles();
@@ -80,6 +100,7 @@ export function BottomBar (props) {
 					onChange={e => setInputText(e.target.value)}
 				/>
 			</form>
+      <TypingIndicator active={props.isTyping} chatPartner={props.chatPartner} />
     </Paper>
   );
 }

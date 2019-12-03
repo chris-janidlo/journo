@@ -99,8 +99,8 @@ export class App extends Component {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <TopBar chatPartner={getStoryVariable('connected_user')} />
-        <Messages chatPartner={getStoryVariable('connected_user')} lines={this.state.lines} isTyping={this.state.typing} />
-        <BottomBar choices={this.state.choices} makeChoice={this.makeChoiceAndUpdateState} />
+        <Messages chatPartner={getStoryVariable('connected_user')} lines={this.state.lines} />
+        <BottomBar chatPartner={getStoryVariable('connected_user')} isTyping={this.state.typing} choices={this.state.choices} makeChoice={this.makeChoiceAndUpdateState} />
       </ThemeProvider>
     );
   }

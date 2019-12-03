@@ -11,7 +11,7 @@ import ReactMarkdown from 'react-markdown';
 const useStyles = makeStyles(theme => {
   // update these if you ever change the top or bottom bars
   const topBarHeight = 64;
-  const bottomBarHeight = 112;
+  const bottomBarHeight = 124;
 
   return {
     fromIndicator: {
@@ -27,11 +27,6 @@ const useStyles = makeStyles(theme => {
     },
     messages: {
       height: `calc(100vh - ${topBarHeight}px - ${bottomBarHeight}px)`
-    },
-    typingIndicator: {
-      position: 'absolute',
-      left: 0,
-      bottom: bottomBarHeight
     }
   }
 });
@@ -84,18 +79,6 @@ function NormalMessage (props) {
   );
 }
 
-function TypingIndicator (props) {
-  const classes = useStyles();
-
-  if (!props.active) return null;
-
-  return (
-    <Typography className={classes.typingIndicator} color='secondary'>
-      <i>{props.chatPartner} is typing...</i>
-    </Typography>
-  )
-}
-
 export function Messages (props) {
   const classes = useStyles();
 
@@ -112,7 +95,6 @@ export function Messages (props) {
           ? <SystemMessage key={i++} line={l} />
           : <NormalMessage key={i++} line={l} chatPartner={props.chatPartner} />)}
       </ScrollableFeed>
-      <TypingIndicator active={props.isTyping} chatPartner={props.chatPartner} />
     </Fragment>
   );
 }
