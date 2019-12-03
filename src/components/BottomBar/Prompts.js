@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react';
 import {
 	Box,
-	Container,
 	Typography,
 	Table,
 	TableBody,
@@ -11,10 +10,14 @@ import {
 } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => {
+	const alignmentMargin = theme.spacing(3.5); // left-right margin needed for prompts to align properly with input
+
   return {
-		promptBox: {
+		prompts: {
 			overflowX: 'scroll',
-			marginTop: theme.spacing(1.5)
+			marginTop: theme.spacing(1.5),
+			marginLeft: alignmentMargin,
+			marginRight: alignmentMargin
 		},
 		promptTable: {
 			marginBottom: theme.spacing(.5)
@@ -148,18 +151,16 @@ function PromptsWrapper (props) {
 	const classes = useStyles();
 
 	return (
-		<Container maxWidth={false}>
-			<Box className={classes.promptBox}>
-				{/* use table for auto spacing and for the nice lines underneath */}
-				<Table className={classes.promptTable}>
-					<TableBody>
-						<TableRow>
-							{props.children}
-						</TableRow>
-					</TableBody>
-				</Table>
-			</Box>
-		</Container>
+		<Box className={classes.prompts}>
+			{/* use table for auto spacing and for the nice lines underneath */}
+			<Table className={classes.promptTable}>
+				<TableBody>
+					<TableRow>
+						{props.children}
+					</TableRow>
+				</TableBody>
+			</Table>
+		</Box>
 	);
 }
 

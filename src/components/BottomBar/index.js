@@ -20,7 +20,7 @@ const useStyles = makeStyles(theme => {
 			width: `calc(100vw - ${2 * inputMargin}px)`,
 			margin: inputMargin,
 			marginTop: theme.spacing(.5),
-			marginBottom: theme.spacing(3.5),
+			marginBottom: theme.spacing(4),
 			borderRadius: theme.shape.borderRadius,
 			backgroundColor: '#f2f2f2',
 		},

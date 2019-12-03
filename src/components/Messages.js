@@ -11,7 +11,7 @@ import ReactMarkdown from 'react-markdown';
 const useStyles = makeStyles(theme => {
   // update these if you ever change the top or bottom bars
   const topBarHeight = 64;
-  const bottomBarHeight = 124;
+  const bottomBarHeight = 128;
 
   return {
     fromIndicator: {
