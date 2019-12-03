@@ -13,9 +13,7 @@
     Well, <> -> hobbies
 
 = hobbies
-TODO: what kind of plane does Travis fly?
 TODO: what kind of drone does Travis fly? should be hackable
-TODO: what kind of telescope/setup does Travis have?
 I like to fly planes. I've put some time into astronomy and hang out at Lick Observatory. Lately I've been getting into quadcopters. I also make a habit of reading - lately, I've been working through Nietzche and Freud.
 * does that make you a pilot?
     It absolutely does - I have a license to fly light sport aircraft.
@@ -30,11 +28,11 @@ I like to fly planes. I've put some time into astronomy and hang out at Lick Obs
         -> planes
     ** isn't that kind of an expensive hobby?
         It's certainly not cheap, but I make enough money to cover maintenance and fuel costs.
-        *** why not donate that to charity?
+        *** {not charity} why not donate that to charity?
             That's assuming that I don't donate a hefty sum to charity in the first place.
-            // -> charity
-        *** how much money do you make?
-            // -> money
+            -> charity
+        *** {not salary} how much money do you make?
+            -> how_much_does_travis_make
 * quadcopters?
     Drones. So named because they use helicopter-like rotors and have four of them.
     
