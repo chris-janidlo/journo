@@ -34,16 +34,6 @@ const useStyles = makeStyles(theme => {
 	}
 });
 
-// prompt highlighting algorithm:
-	// if inputLength is 0: color every prompt in grey.
-	// else:
-		// determine which prompt(s) starts with the most characters from the input - call that number n.
-		// for the prompt(s) that share the first n characters with the input:
-			// color the first n characters in black.
-			// if the input is exactly n characters: color the rest of the characters grey.
-			// else: color the next (inputLength - n) characters red.
-		// for the prompt(s) that do not share the first n characters, color every character grey.
-
 function arrayStartsWith (first, second) {
 	for (let i = 0; i < second.length; i++) {
 		if (first[i] !== second[i]) return false;
@@ -77,6 +67,7 @@ function PromptWrapper (props) {
 	);
 }
 
+// break in underline to visually space out prompts
 function PromptSpacer (props) {
 	const classes = useStyles();
 	return (
@@ -86,6 +77,7 @@ function PromptSpacer (props) {
 	);
 }
 
+// prompt for a choice that definitely is not being typed out
 function GreyPrompt (props) {
 	return (
 		<PromptWrapper>
@@ -94,52 +86,55 @@ function GreyPrompt (props) {
 	);
 }
 
+// prompt for a choice that may or may not be in the process of being typed out
 function InteractivePrompt (props) {
 	const inputSymbols = props.inputSymbols; // player input
 	const targetSymbols = props.targetSymbols; // text for this prompt
 
 	const n = props.longestStartsWithLength;
 
+	// check if we know before doing anything else that the user isn't trying to type this choice out, and if so grey it
 	if (inputSymbols.length === 0 || targetSymbols.length < n) return <GreyPrompt text={targetSymbols.join('')} />;
 	
-	let textElements = [];
-	let sharedLength = 0;
+	const coloredSymbols = [];
+	let sharedLength = 0; // number of symbols shared between the start of input and target symbols
 
 	for (let i = 0; i < targetSymbols.length; i++) {
-		if (i < inputSymbols.length && arrayStartsWith(targetSymbols, inputSymbols.slice(0, i + 1))) {
-			sharedLength++;
-			textElements.push(<ColoredText key={i} text={inputSymbols[i]} color='initial' />);
-			props.setTypo(false);
+		if (i < inputSymbols.length) {
+			// process next typed symbol
+
+			// if we do share so far, we're in the happy path
+			// if we don't, then the most recent symbol is a mismatch and must be a typo
+			const sharesSoFar = arrayStartsWith(targetSymbols, inputSymbols.slice(0, i + 1));
+
+			if (sharesSoFar) sharedLength++;
+
+			coloredSymbols.push(<ColoredText key={i} text={inputSymbols[i]} color={sharesSoFar ? 'initial' : 'error'} />);
+			props.setTypo(!sharesSoFar);
+		}
+		else if (sharedLength < n) {
+			// another prompt's choice starts with more characters from the input, so we can assume the player isn't trying to type this choice out
+			return <GreyPrompt text={targetSymbols.join('')} />;
+		}
+		else if (sharedLength === n) {
+			// this prompt has the most shared characters with the input, and we've exhausted the input but still have more target characters. color those in grey since we still need to type them
+			coloredSymbols.push(<ColoredText key={i} text={targetSymbols[i]} color='secondary' />);
 		}
 		else {
-			if (sharedLength < n) {
-				// another prompt starts with more characters from the input, so we can assume the player isn't trying to type this prompt out
-				return <GreyPrompt text={targetSymbols.join('')} />;
-			}
-			else if (i < inputSymbols.length) {
-				// this prompt has the most shared characters with the input, but the input has some amount of additional characters that aren't shared; those must be typos
-				textElements.push(<ColoredText key={i} text={inputSymbols[i]} color='error' />);
-				props.setTypo(true);
-			}
-			else if (sharedLength === n) {
-				// this prompt has the most shared characters with the input, and we've exhausted the input but still have more target characters. color those in grey since we still need to type them
-				textElements.push(<ColoredText key={i} text={targetSymbols[i]} color='secondary' />);
-			}
-			else if (sharedLength > n) {
-				throw new Error('target should not share more characters with the input than we\'ve already calculated as the max');
-			}
+			// if sharedLength > n
+			throw new Error('target should not share more characters with the input than we\'ve already calculated as the max');
 		}
 	}
 
-	// handle any extra input characters
+	// handle any additional symbols beyond the target length. every one of these additional symbols must be a typo
 	for (let i = targetSymbols.length; i < inputSymbols.length; i++) {
-		textElements.push(<ColoredText key={i} text={inputSymbols[i]} color='error' />);
+		coloredSymbols.push(<ColoredText key={i} text={inputSymbols[i]} color='error' />);
 		props.setTypo(true);
 	}
 
 	return (
 		<PromptWrapper>
-			{textElements}
+			{coloredSymbols}
 		</PromptWrapper>
 	);
 }
@@ -197,6 +192,7 @@ export function Prompts (props) {
 						longestStartsWithLength={longestStartsWithLength}
 						inputSymbols={inputSymbols}
 						targetSymbols={[...c]}
+						typo={props.typo}
 						setTypo={props.setTypo}
 					/>
 				</Fragment>
