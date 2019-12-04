@@ -192,7 +192,6 @@ export function Prompts (props) {
 						longestStartsWithLength={longestStartsWithLength}
 						inputSymbols={inputSymbols}
 						targetSymbols={[...c]}
-						typo={props.typo}
 						setTypo={props.setTypo}
 					/>
 				</Fragment>

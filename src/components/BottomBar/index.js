@@ -83,7 +83,6 @@ export function BottomBar (props) {
 			<Prompts
 				choices={choices}
 				inputText={inputText}
-				typo={typo}
 				setTypo={setTypo}
 			/>
 			<form autoCapitalize='none' autoComplete='off' autoCorrect='off'>
