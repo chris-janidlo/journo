@@ -89,40 +89,38 @@ function GreyPrompt (props) {
 // prompt for a choice that may or may not be in the process of being typed out
 function InteractivePrompt (props) {
 	const inputSymbols = props.inputSymbols; // player input
-	const targetSymbols = props.targetSymbols; // text for this prompt
+	const targetSymbols = props.targetSymbols; // this prompt's choice
 
-	const n = props.longestStartsWithLength;
+	const longestSharedLength = props.longestStartsWithLength;
 
 	// check if we know before doing anything else that the user isn't trying to type this choice out, and if so grey it
-	if (inputSymbols.length === 0 || targetSymbols.length < n) return <GreyPrompt text={targetSymbols.join('')} />;
+	if (inputSymbols.length === 0 || targetSymbols.length < longestSharedLength) return <GreyPrompt text={targetSymbols.join('')} />;
 	
 	const coloredSymbols = [];
 	let sharedLength = 0; // number of symbols shared between the start of input and target symbols
 
 	for (let i = 0; i < targetSymbols.length; i++) {
-		if (i < inputSymbols.length && arrayStartsWith(targetSymbols, inputSymbols.slice(0, i + 1))) {
-			// the happy path; every input symbol so far is shared with the target
-			sharedLength++;
-			coloredSymbols.push(<ColoredText key={i} text={inputSymbols[i]} color='initial' />);
-			props.setTypo(false);
+		// check for parsing errors first
+		if (sharedLength > longestSharedLength) {
+			throw new Error('target should not share more characters with the input than we\'ve already calculated as the max');
 		}
-		else if (sharedLength < n) {
+
+		const shareEverySymbolSoFar = arrayStartsWith(targetSymbols, inputSymbols.slice(0, i + 1));
+
+		if (!shareEverySymbolSoFar && sharedLength < longestSharedLength) {
 			// another prompt's choice starts with more characters from the input, so we can assume the player isn't trying to type this choice out
 			return <GreyPrompt text={targetSymbols.join('')} />;
 		}
-		else if (i < inputSymbols.length) {
-			// this target has the most shared symbols but some of the input symbols are not accounted for and must be typos
-			coloredSymbols.push(<ColoredText key={i} text={inputSymbols[i]} color='error' />);
-			props.setTypo(true);
+		
+		const processingInput = i < inputSymbols.length;
+		
+		if (processingInput) {
+			if (shareEverySymbolSoFar) sharedLength++;
+			props.setTypo(!shareEverySymbolSoFar);
 		}
-		else if (sharedLength === n) {
-			// this target has the most shared symbols with the input, and we've exhausted the input but still have more target characters. color those in grey since we still need to type them
-			coloredSymbols.push(<ColoredText key={i} text={targetSymbols[i]} color='secondary' />);
-		}
-		else {
-			// if sharedLength > n
-			throw new Error('target should not share more characters with the input than we\'ve already calculated as the max');
-		}
+
+		const color = processingInput ? (shareEverySymbolSoFar ? 'initial' : 'error') : 'secondary';
+		coloredSymbols.push(<ColoredText key={i} text={(processingInput ? inputSymbols : targetSymbols)[i]} color={color} />);
 	}
 
 	// handle any additional symbols beyond the target length. every one of these additional symbols must be a typo
