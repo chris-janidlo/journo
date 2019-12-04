@@ -148,7 +148,7 @@ function PromptsWrapper (props) {
 	const classes = useStyles();
 
 	return (
-		<Box className={classes.prompts}>
+		<Box className={classes.promptBox}>
 			{/* use table for auto spacing and for the nice lines underneath */}
 			<Table className={classes.promptTable}>
 				<TableBody>
