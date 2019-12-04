@@ -12,7 +12,7 @@ figure out what the initial scoop is
 implement Travis leaving due to time
 create favicon
 let users horizontally scroll the prompts using their vertical scroll wheels
-if prompt is wider than the screen, scroll along the screen as the user types it out
+scroll so that the next upcoming character in a prompt is always visible
 add hotjar or inspectlet for user recording
 	figure out which one is better
 
