@@ -100,24 +100,23 @@ function InteractivePrompt (props) {
 	let sharedLength = 0; // number of symbols shared between the start of input and target symbols
 
 	for (let i = 0; i < targetSymbols.length; i++) {
-		if (i < inputSymbols.length) {
-			// process next typed symbol
-
-			// if we do share so far, we're in the happy path
-			// if we don't, then the most recent symbol is a mismatch and must be a typo
-			const sharesSoFar = arrayStartsWith(targetSymbols, inputSymbols.slice(0, i + 1));
-
-			if (sharesSoFar) sharedLength++;
-
-			coloredSymbols.push(<ColoredText key={i} text={inputSymbols[i]} color={sharesSoFar ? 'initial' : 'error'} />);
-			props.setTypo(!sharesSoFar);
+		if (i < inputSymbols.length && arrayStartsWith(targetSymbols, inputSymbols.slice(0, i + 1))) {
+			// the happy path; every input symbol so far is shared with the target
+			sharedLength++;
+			coloredSymbols.push(<ColoredText key={i} text={inputSymbols[i]} color='initial' />);
+			props.setTypo(false);
 		}
 		else if (sharedLength < n) {
 			// another prompt's choice starts with more characters from the input, so we can assume the player isn't trying to type this choice out
 			return <GreyPrompt text={targetSymbols.join('')} />;
 		}
+		else if (i < inputSymbols.length) {
+			// this target has the most shared symbols but some of the input symbols are not accounted for and must be typos
+			coloredSymbols.push(<ColoredText key={i} text={inputSymbols[i]} color='error' />);
+			props.setTypo(true);
+		}
 		else if (sharedLength === n) {
-			// this prompt has the most shared characters with the input, and we've exhausted the input but still have more target characters. color those in grey since we still need to type them
+			// this target has the most shared symbols with the input, and we've exhausted the input but still have more target characters. color those in grey since we still need to type them
 			coloredSymbols.push(<ColoredText key={i} text={targetSymbols[i]} color='secondary' />);
 		}
 		else {
