@@ -13,7 +13,7 @@ const useStyles = makeStyles(theme => {
 	const alignmentMargin = theme.spacing(3.5); // left-right margin needed for prompts to align properly with input
 
   return {
-		prompts: {
+		promptBox: {
 			overflowX: 'scroll',
 			marginTop: theme.spacing(1.5),
 			marginLeft: alignmentMargin,
@@ -22,7 +22,7 @@ const useStyles = makeStyles(theme => {
 		promptTable: {
 			marginBottom: theme.spacing(.5)
 		},
-		tableCell: {
+		promptTableCell: {
 			whiteSpace: 'nowrap',
 			padding: 0
 		},
@@ -52,19 +52,10 @@ function arrayStartsWith (first, second) {
 }
 
 // takes text and color
-// text can be either a string or array of strings
+// text is a string
 // color is the Material UI Typography color attribute
 function ColoredText (props) {
 	const classes = useStyles();
-
-	let text = '';
-
-	if (props.text.isArray) {
-		text = props.text.join('');
-	}
-	else {
-		text = props.text;
-	}
 
 	return (
 		<Typography
@@ -72,78 +63,84 @@ function ColoredText (props) {
 			color={props.color}
 			className={classes.coloredText}
 		>
-			{text}
+			{props.text}
 		</Typography>
 	)
 }
 
-function PromptTableWrapper (props) {
+function PromptWrapper (props) {
 	const classes = useStyles();
 	return (
-		<TableCell className={classes.tableCell} align='center'>
+		<TableCell className={classes.promptTableCell} align='center'>
 			{props.children}
 		</TableCell>
 	);
 }
 
-function Prompt (props) {
+function PromptSpacer (props) {
+	const classes = useStyles();
+	return (
+		<TableCell className={classes.promptTableCell} style={{borderBottom:'none'}}>
+			&emsp;&ensp;
+		</TableCell>
+	);
+}
+
+function GreyPrompt (props) {
+	return (
+		<PromptWrapper>
+			<ColoredText text={props.text} color='secondary' />
+		</PromptWrapper>
+	);
+}
+
+function InteractivePrompt (props) {
 	const inputSymbols = props.inputSymbols; // player input
 	const targetSymbols = props.targetSymbols; // text for this prompt
 
 	const n = props.longestStartsWithLength;
 
+	if (inputSymbols.length === 0 || targetSymbols.length < n) return <GreyPrompt text={targetSymbols.join('')} />;
+	
 	let textElements = [];
 	let sharedLength = 0;
-	let greyed = false;
 
-	if (inputSymbols.length === 0 || targetSymbols.length < n) {
-		greyed = true;
-	}
-	else {
-		for (let i = 0; i < targetSymbols.length; i++) {
-			if (i < inputSymbols.length && arrayStartsWith(targetSymbols, inputSymbols.slice(0, i + 1))) {
-				sharedLength++;
-				textElements.push(<ColoredText key={i} text={inputSymbols[i]} color='initial' />);
-				props.setTypo(false);
-			}
-			else {
-				if (sharedLength !== n) {
-					if (sharedLength > n) {
-						throw new Error('target should not share more characters with the input than we\'ve already calculated as the max');
-					}
-					// another prompt starts with more characters from the input, so we can assume the player isn't trying to type this prompt out
-					greyed = true;
-					break;
-				}
-				else if (inputSymbols.length > i) {
-					// this prompt has the most shared characters with the input, but the input has some amount of additional characters that aren't shared; those must be typos
-					textElements.push(<ColoredText key={i} text={inputSymbols[i]} color='error' />);
-					props.setTypo(true);
-				}
-				else {
-					// this prompt has the most shared characters with the input, and we've exhausted the input but still have more target characters. color those in grey since we still need to type them
-					textElements.push(<ColoredText key={i} text={targetSymbols[i]} color='secondary' />);
-				}
-			}
+	for (let i = 0; i < targetSymbols.length; i++) {
+		if (i < inputSymbols.length && arrayStartsWith(targetSymbols, inputSymbols.slice(0, i + 1))) {
+			sharedLength++;
+			textElements.push(<ColoredText key={i} text={inputSymbols[i]} color='initial' />);
+			props.setTypo(false);
 		}
-
-		if (!greyed) {
-			// handle any extra input characters
-			for (let i = targetSymbols.length; i < inputSymbols.length; i++) {
+		else {
+			if (sharedLength < n) {
+				// another prompt starts with more characters from the input, so we can assume the player isn't trying to type this prompt out
+				return <GreyPrompt text={targetSymbols.join('')} />;
+			}
+			else if (i < inputSymbols.length) {
+				// this prompt has the most shared characters with the input, but the input has some amount of additional characters that aren't shared; those must be typos
 				textElements.push(<ColoredText key={i} text={inputSymbols[i]} color='error' />);
 				props.setTypo(true);
 			}
+			else if (sharedLength === n) {
+				// this prompt has the most shared characters with the input, and we've exhausted the input but still have more target characters. color those in grey since we still need to type them
+				textElements.push(<ColoredText key={i} text={targetSymbols[i]} color='secondary' />);
+			}
+			else if (sharedLength > n) {
+				throw new Error('target should not share more characters with the input than we\'ve already calculated as the max');
+			}
 		}
 	}
 
+	// handle any extra input characters
+	for (let i = targetSymbols.length; i < inputSymbols.length; i++) {
+		textElements.push(<ColoredText key={i} text={inputSymbols[i]} color='error' />);
+		props.setTypo(true);
+	}
+
 	return (
-		<PromptTableWrapper>
-			{
-				greyed
-					? <ColoredText text={targetSymbols} color='secondary' />
-					: textElements
-			}
-		</PromptTableWrapper>
+		<PromptWrapper>
+			{textElements}
+		</PromptWrapper>
 	);
 }
 
@@ -165,15 +162,11 @@ function PromptsWrapper (props) {
 }
 
 export function Prompts (props) {
-	const classes = useStyles();
-
 	const choices = props.choices;
 	if (!Array.isArray(choices) || !choices.length) {
 		return (
 			<PromptsWrapper>
-				<PromptTableWrapper>
-					<ColoredText text='&ensp;' color='secondary' />
-				</PromptTableWrapper>
+				<GreyPrompt text='&ensp;' />
 			</PromptsWrapper>
 		);
 	}
@@ -195,19 +188,12 @@ export function Prompts (props) {
 
 	let index = 0;
 
-	// creates break in line underneath prompts
-	const spacer = (
-		<TableCell style={{borderBottom:'none'}} className={classes.tableCell}>
-			&emsp;&ensp;
-		</TableCell>
-	);
-
 	return (
 		<PromptsWrapper>
 			{choices.map(c =>
 				<Fragment key={index++}>
-					{ c === choices[0] ? null : spacer }
-					<Prompt
+					{ c === choices[0] ? null : <PromptSpacer /> }
+					<InteractivePrompt
 						longestStartsWithLength={longestStartsWithLength}
 						inputSymbols={inputSymbols}
 						targetSymbols={[...c]}
