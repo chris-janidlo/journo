@@ -34,13 +34,6 @@ const useStyles = makeStyles(theme => {
 	}
 });
 
-function arrayStartsWith (first, second) {
-	for (let i = 0; i < second.length; i++) {
-		if (first[i] !== second[i]) return false;
-	}
-	return true;
-}
-
 // takes text and color
 // text is a string
 // color is the Material UI Typography color attribute
@@ -98,6 +91,7 @@ function InteractivePrompt (props) {
 	
 	const coloredSymbols = [];
 	let sharedLength = 0; // number of symbols shared between the start of input and target symbols
+	let shareEverySymbolSoFar = true; // true if the first i members of inputSymbols and targetSymbols are the same
 
 	for (let i = 0; i < targetSymbols.length; i++) {
 		// check for parsing errors first
@@ -105,7 +99,7 @@ function InteractivePrompt (props) {
 			throw new Error('target should not share more characters with the input than we\'ve already calculated as the max');
 		}
 
-		const shareEverySymbolSoFar = arrayStartsWith(targetSymbols, inputSymbols.slice(0, i + 1));
+		shareEverySymbolSoFar = shareEverySymbolSoFar && (inputSymbols[i] === targetSymbols[i]);
 
 		if (!shareEverySymbolSoFar && sharedLength < longestSharedLength) {
 			// another prompt's choice starts with more characters from the input, so we can assume the player isn't trying to type this choice out
@@ -153,6 +147,13 @@ function PromptsWrapper (props) {
 	);
 }
 
+function arrayStartsWith (first, second) {
+	for (let i = 0; i < second.length; i++) {
+		if (first[i] !== second[i]) return false;
+	}
+	return true;
+}
+
 export function Prompts (props) {
 	const choices = props.choices;
 	if (!Array.isArray(choices) || !choices.length) {
@@ -164,13 +165,14 @@ export function Prompts (props) {
 	}
 
 	const inputSymbols = [...props.inputText]; // in case input contains unicode (https://stackoverflow.com/q/46157867/5931898)
+	const choiceSymbols = choices.map(c => [...c]);
 
 	let longestStartsWithLength = 0;
 
 	if (inputSymbols.length !== 0) {
 		for (let i = 0; i < inputSymbols.length; i++) {
-			if (choices.some(p => arrayStartsWith([...p], inputSymbols.slice(0, i + 1)))) {
-				longestStartsWithLength = i + 1;
+			if (choiceSymbols.some(c => arrayStartsWith(c, inputSymbols.slice(0, i + 1)))) {
+				longestStartsWithLength++;
 			}
 		}
 	}
@@ -182,13 +184,13 @@ export function Prompts (props) {
 
 	return (
 		<PromptsWrapper>
-			{choices.map(c =>
+			{choiceSymbols.map(c =>
 				<Fragment key={index++}>
-					{ c === choices[0] ? null : <PromptSpacer /> }
+					{ c === choiceSymbols[0] ? null : <PromptSpacer /> }
 					<InteractivePrompt
 						longestStartsWithLength={longestStartsWithLength}
 						inputSymbols={inputSymbols}
-						targetSymbols={[...c]}
+						targetSymbols={c}
 						setTypo={props.setTypo}
 					/>
 				</Fragment>
