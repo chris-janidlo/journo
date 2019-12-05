@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, memo } from 'react';
 import {
 	Box,
 	Typography,
@@ -154,7 +154,8 @@ function arrayStartsWith (first, second) {
 	return true;
 }
 
-export function Prompts (props) {
+// memo is necessary here because if the component re-renders it will call setTypo, which is often not wanted (for instance when the player hits enter on an incomplete but otherwise typo-free input)
+export const Prompts = memo(props => {
 	const choices = props.choices;
 	if (!Array.isArray(choices) || !choices.length) {
 		return (
@@ -197,4 +198,4 @@ export function Prompts (props) {
 			)}
 		</PromptsWrapper>		
 	);
-}
+});
