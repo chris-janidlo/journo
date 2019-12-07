@@ -19,6 +19,14 @@ export const theme = createMuiTheme({
   shape: {
     borderRadius: 20
   },
+  typography: {
+    body1: {
+      fontWeight: 300
+    },
+    body2: {
+      fontWeight: 300
+    }
+  },
   overrides: {
     MuiCssBaseline: {
       // default properties taken from https://stackoverflow.com/q/7855590/5931898
