@@ -16,7 +16,7 @@
   "dependencies": {
     "@material-ui/core": "latest",
     "@material-ui/icons": "^4.5.1",
-    "inkjs": "^1.8.0-beta.1",
+    "inkjs": "1.8.0-beta.1",
     "normalize.css": "^8.0.1",
     "react": "latest",
     "react-dom": "latest",
@@ -24,6 +24,17 @@
     "react-scripts": "latest",
     "react-scrollable-feed": "^1.1.0"
   },
+  "devDependencies": {
+    "onchange": "^6.1.0",
+    "watch": "^1.0.2"
+  },
+  "engines": {
+    "node": "^10.17.0",
+    "npm": "^6.1.3"
+  },
+  "os": [
+    "darwin"
+  ],
   "browserslist": {
     "production": [
       ">0.2%",
@@ -35,9 +46,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "onchange": "^6.1.0",
-    "watch": "^1.0.2"
   }
 }
