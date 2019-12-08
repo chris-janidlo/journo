@@ -57,32 +57,11 @@ newspaper names
 		disrupt news
 
 initial scoop
-	encryption backdoor for us government
-	selling camera/mic data
-	banning all muslims
-	banning political discussions
-	setting up a data server in a nature reserve
-	just fired high-up employee for reporting discriminatory behavior
 	recommending users to be tracked by law enforcement if facebook predicts they will commit a crime
-	intentionally showing depressing content to keep users addicted
-	insider advertising - surfacing ads base on bribes
-	discovered a way to project ads onto the real world
-	shadow-banning all anti-facebook opinions
-	not deleting a pedo group because a high ranking employee is a member
-	top level of organization is a pedo ring
-	turning in low-level drug users to police
-	facebook is buying out MS Windows and replacing it with adware
-	keeping a blacklist of any user with adblock and making the product subtly worse (load time, more negative posts) for those users
-	literally killing puppies
-	literally selling your data - instead of buying ads to target to a demographic, now you can just outright buy a list of people in a demographic or, worse, buy all the details of a specific user
-	building data server on historical site
-	propping up a totalitarian regime because that region has a lot of users
-	making users delete any non-facebook-owned social media accounts in order to use any of their products
-	stealing code from other companies
-	installing adware on operating systems, after users click "ok" on an annoying pop-up
-	calling hit jobs on engineers in competing companies
-	assassinating politician in a region that has recently banned a facebook product
-	if you try to delete your account, all your friends are alerted 
+	name brainstorming
+		majority report
+		neighborhood watch
+		predictive criminal analytics
 
 Bofaeock: a brief history
 	highly technologically advanced, centuries beyond humans
