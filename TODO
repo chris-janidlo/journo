@@ -1,6 +1,7 @@
 global bug and to do list
 
 FIXME:
+player choice can be incorrectly rendered as travis text if the content changes in between choosing and printing (ie if the choice content includes a call to remaining_time_to_string)
 
 TODO:
 == plot ==
