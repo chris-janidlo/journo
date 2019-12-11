@@ -24,6 +24,9 @@ story.BindExternalFunction("get_elapsed_seconds", () => {
   return Math.floor((currentTime - origTime) / 1000);
 });
 
+// atm this is so you can capitalize any given string in ink. might want to just *always* capitalize every travis string, though, since that makes stringing content together more flexible
+story.BindExternalFunction("capitalize", string => string[0].toUpperCase() + string.slice(1));
+
 function continueStory () {
   if (!story.canContinue) return null;
 
@@ -95,4 +98,9 @@ function makeChoice (choiceText) {
   story.ChooseChoiceIndex(getChoices().indexOf(choiceText));
 }
 
-export { continueStory, makeChoice, getVariable as getStoryVariable, setVariable as setStoryVariable };
+export {
+  continueStory,
+  makeChoice,
+  getVariable as getStoryVariable,
+  setVariable as setStoryVariable,
+};

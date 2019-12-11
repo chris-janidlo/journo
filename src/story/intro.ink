@@ -21,23 +21,23 @@ Hello, who is this? -> new_phone_who_dis
 
 = new_phone_who_dis
 * this is Newspaper
-    Oh, fantastic, I wasn't expecting this thing to actually work.
+    Oh, fantastic, I wasn't expecting this thing to actually work. # startTimer
 * who are you?
     Sorry, don't recognize the number, won't share my name.
     -> new_phone_who_dis
 
--You caught me at an awkward time though - I absolutely have to leave for a series of meetings starting in 5 minutes. # interruptible
+-You caught me at an awkward time though - I absolutely have to leave for a series of meetings starting in {total_time_to_string()}. # interruptible
 * then why did you use it?
     -> interrupted ->
-    I only have 5 minutes since I'm about to leave for a series of high-priority meetings.
+    I only have {total_time_to_string()} since I'm about to leave for a series of high-priority meetings.
 * [.wait]
 
 -After that I'm going on a tech-detox vacation in Thailand for a week. # interruptible
-* 5 minutes is not enough time to verify you as a source
+* \ {total_time_to_string()} is not enough time to verify you as a source
     -> interrupted -> busy
 * [.wait]
     I hope that isn't an issue. # interruptible
-** 5 minutes is not enough time to verify you as a source
+** \ {total_time_to_string()} is not enough time to verify you as a source
     -> busy
 
 = busy
