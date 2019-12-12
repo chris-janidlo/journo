@@ -151,7 +151,7 @@ let playerJustSpoke = false;
 let lastChoiceText = '';
 
 function makeChoice (choiceText) {
-  playerJustSpoke = true;
+  if (choiceText !== '.wait') playerJustSpoke = true;
   lastChoiceText = choiceText;
   story.ChooseChoiceIndex(getChoices().indexOf(choiceText));
 }
