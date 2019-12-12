@@ -41,6 +41,8 @@ export class App extends Component {
     const { line, choices } = next;
     const interruptible = line.tags.interruptible;
 
+    if (process.env.NODE_ENV === 'development') console.log(line.text, next);
+    
     const typingTimeout = setTimeout(() => {
       this.setState(
         state => ({
