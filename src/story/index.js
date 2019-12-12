@@ -85,7 +85,7 @@ function getLine () {
   if (!story.canContinue && warning === null) return null;
 
   const text = story.canContinue ? story.Continue().trim() : warning;
-  const fromPlayer = text === lastChoiceText;
+  const fromPlayer = playerJustSpoke;
 
   // we put placeholder values here so that vs code knows what members line has
   const line = { text, fromPlayer, tags: {}, typingTime: null, thinkingTime: null, canWait: null };
@@ -98,6 +98,7 @@ function getLine () {
   line.typingTime = typingTime;
   line.thinkingTime = thinkingTime;
 
+  playerJustSpoke = false;
   return line;
 }
 
@@ -133,8 +134,7 @@ function timings (line) {
   const typingChars = line.text.length;
 
   const thinkingMSPerCharacter = 12000 / getVariable('TRAVIS_TPM');
-  const thinkingChars = (line.text.length + (justResponded ? lastChoiceText.length : 0)) * (justResponded ? 1 : getVariable('FOLLOW_UP_TPM_SCALE'));
-  justResponded = false;
+  const thinkingChars = (line.text.length + (playerJustSpoke ? lastChoiceText.length : 0)) * (playerJustSpoke ? 1 : getVariable('FOLLOW_UP_TPM_SCALE'));
 
   const flatDelay = ('delay' in line.tags) ? line.tags.delay * 1000 : 0;
   const scale = ('timescale' in line.tags) ? line.tags.timescale : 1;
@@ -147,12 +147,12 @@ function timings (line) {
 
 const getChoices = () => story.currentChoices.map(c => c.text);
 
+let playerJustSpoke = false;
 let lastChoiceText = '';
-let justResponded = false;
 
 function makeChoice (choiceText) {
+  playerJustSpoke = true;
   lastChoiceText = choiceText;
-  justResponded = true;
   story.ChooseChoiceIndex(getChoices().indexOf(choiceText));
 }
 
