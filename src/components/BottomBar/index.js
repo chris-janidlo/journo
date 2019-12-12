@@ -38,7 +38,7 @@ function TypingIndicator (props) {
   if (!props.active) return null;
 
   return (
-    <Typography className={classes.typingIndicator} color='secondary'>
+    <Typography className={classes.typingIndicator}>
       <i>{props.chatPartner} is typing...</i>
     </Typography>
   )
