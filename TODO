@@ -14,6 +14,7 @@ add ability to redirect to story content in develop mode
 create favicon
 let users horizontally scroll the prompts using their vertical scroll wheels
 scroll so that the next upcoming character in a prompt is always visible
+make error text in prompt change the background in addition to the characters
 add hotjar or inspectlet for user recording
 	figure out which one is better
 make all react components use `const { prop1, prop2, ... } = props` style so as to be more declarative
