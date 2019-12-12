@@ -1,40 +1,27 @@
 // place for general functions and js-ink interface
 
-// note: may not be totally accurate; see https://github.com/inkle/ink/blob/master/Documentation/RunningYourInk.md#external-functions
-EXTERNAL get_elapsed_seconds()
-// fallback
+EXTERNAL get_elapsed_seconds ()
 == function get_elapsed_seconds
 ~ return 0
 
-EXTERNAL capitalize(string)
-// fallback
+EXTERNAL capitalize (string)
 == function capitalize (string)
 ~ return "capital " + string
 
-== function alter (ref x, k)
-~ x = x + k
-
+EXTERNAL time_duration_to_string (seconds)
 == function time_duration_to_string (seconds)
-{
-- seconds <= 45:
-    ~ return "{seconds} seconds"
-- else:
-    ~ temp minutes = seconds / 60
-    ~ temp extra_seconds = seconds - (minutes * 60)
-    ~ temp and_a_half_string = "{extra_seconds >= 15 && extra_seconds < 45: and a half}"
-    ~ temp about_string = "{not (extra_seconds <= 10 || extra_seconds >= 50 || (extra_seconds >= 20 && extra_seconds <= 40)):about }"
+~ return seconds
 
-    // round up
-    {extra_seconds >= 45: {alter(minutes, 1)}}
-    
-    ~ return "{minutes == 1:{about_string}a minute{and_a_half_string}|{about_string}{minutes}{and_a_half_string} minutes}"
-}
-
+EXTERNAL remaining_time_to_string ()
 == function remaining_time_to_string ()
 ~ return time_duration_to_string(MAX_INTERVIEW_TIME - get_elapsed_seconds())
 
+EXTERNAL total_time_to_string ()
 == function total_time_to_string ()
 ~ return time_duration_to_string(MAX_INTERVIEW_TIME)
+
+== function alter (ref x, k)
+~ x = x + k
 
 // in seconds
 VAR MAX_INTERVIEW_TIME = 900
