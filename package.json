@@ -5,8 +5,8 @@
   "private": true,
   "homepage": ".",
   "scripts": {
-    "ink": "./lib/inklecate -p src/story/main.ink",
-    "compileInk": "./lib/inklecate -o src/story/content.json src/story/main.ink",
+    "ink": "./lib/inklecate -cp src/story/main.ink",
+    "compileInk": "./lib/inklecate -co src/story/content.json src/story/main.ink",
     "start": "npm run compileInk && (react-scripts start  &  npx onchange src/**/*.ink -- npm run compileInk)",
     "build": "npm run compileInk  &&  react-scripts build",
     "deploy": "./lib/butler push build crass-sandwich/journo:html",
