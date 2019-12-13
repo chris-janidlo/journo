@@ -9,7 +9,8 @@ const tagsToIgnore = [
 
 // any time a line's tag matches one of the keys here, we also add every tag in the object associated with that key to the line's metadata
 const impliedTags = {
-  'system': { timescale: 0, suppressTypingIndicator: true }
+  'system': { timescale: 0, suppressTypingIndicator: true },
+  'warning': { interruptible: true }
 }
 
 const timeWarnings = [
@@ -20,6 +21,8 @@ const timeWarnings = [
   { 'minutes':  1, 'warning': "(1 minute warning!!)" }
 ];
 let currentTimeMilestone = 0; // for tracking
+
+const outOfTimeKnot = "out_of_time";
 
 const story = new Story(storyContent);
 
@@ -81,7 +84,13 @@ function continueStory () {
 }
 
 function getLine () {
-  const warning = story.canContinue ? null : getTimeWarning();
+  const outOfTime = startTime !== null && remainingSeconds() <= 0;
+
+  if (outOfTime && story.state.VisitCountAtPathString(outOfTimeKnot) === 0 && !playerJustSpoke) {
+    story.ChoosePathString(outOfTimeKnot);
+  }
+
+  const warning = (story.canContinue || outOfTime) ? null : getTimeWarning();
   if (!story.canContinue && warning === null) return null;
 
   const text = story.canContinue ? story.Continue().trim() : warning;
@@ -90,7 +99,10 @@ function getLine () {
   // we put placeholder values here so that vs code knows what members line has
   const line = { text, fromPlayer, tags: {}, typingTime: null, thinkingTime: null, canWait: null };
 
-  if (story.currentTags.length !== 0) {
+  if (warning !== null) {
+    line.tags = impliedTags.warning;
+  }
+  else if (story.currentTags.length !== 0) {
     line.tags = parseTags(story.currentTags);
   }
 
@@ -103,13 +115,13 @@ function getLine () {
 }
 
 function getTimeWarning () {
-  if (currentTimeMilestone >= timeWarnings.length) return null;
+  if (startTime === null || currentTimeMilestone >= timeWarnings.length) return null;
 
   const remaining = remainingSeconds();
 
   // get the latest warning that applies
   let warning = null;
-  while (remaining <= timeWarnings[currentTimeMilestone].minutes * 60) {
+  while (currentTimeMilestone < timeWarnings.length && remaining <= timeWarnings[currentTimeMilestone].minutes * 60) {
     warning = timeWarnings[currentTimeMilestone++].warning;
   }
 
@@ -161,4 +173,6 @@ export {
   makeChoice,
   getVariable as getStoryVariable,
   setVariable as setStoryVariable,
+  elapsedSeconds,
+  remainingSeconds
 };

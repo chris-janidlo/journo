@@ -11,6 +11,7 @@ import {
   getStoryVariable,
   setStoryVariable
 } from './story';
+import { DevClock } from './components/DevClock';
 
 export class App extends Component {
 
@@ -41,7 +42,7 @@ export class App extends Component {
     const { line, choices } = next;
     const interruptible = line.tags.interruptible;
 
-    if (process.env.NODE_ENV === 'development') console.log(line.text, next);
+    if (global.devEnv) console.log(line.text, next);
     
     const typingTimeout = setTimeout(() => {
       this.setState(
@@ -103,6 +104,7 @@ export class App extends Component {
         <TopBar chatPartner={getStoryVariable('connected_user')} />
         <Messages chatPartner={getStoryVariable('connected_user')} lines={this.state.lines} />
         <BottomBar chatPartner={getStoryVariable('connected_user')} isTyping={this.state.typing} choices={this.state.choices} makeChoice={this.makeChoiceAndUpdateState} />
+        {global.devEnv ? <DevClock /> : null}
       </ThemeProvider>
     );
   }
