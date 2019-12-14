@@ -6,6 +6,10 @@ import {
 	Typography,
 	makeStyles
 } from '@material-ui/core';
+import {
+	getStoryVariable,
+	setStoryVariable
+} from '../../story'
 
 const useStyles = makeStyles(theme => {
 	const inputMargin = theme.spacing(2);
@@ -31,6 +35,32 @@ const useStyles = makeStyles(theme => {
     }
 	}
 });
+
+function doDevCommand (command, args) {
+	const checkArity = length => {
+		if (args.length < length) {
+			console.warn(`not enough arguments given for ${command}; got ${args.length}, expected ${length}`);
+			return false;
+		}
+		return true;
+	}
+
+	switch (command) {
+		case 'get':
+			if (checkArity(1)) {
+				console.log(getStoryVariable(args[0]));
+			}
+			break;
+		case 'set':
+			if (checkArity(2)) {
+				setStoryVariable(args[0], args[1]);
+				console.log(`set ${args[0]} to ${args[1]}`);
+			}
+			break;
+		default:
+			console.warn('unknown dev command ' + command);
+	}
+}
 
 function TypingIndicator (props) {
 	const classes = useStyles();
@@ -71,6 +101,11 @@ export function BottomBar (props) {
 			props.makeChoice(inputText);
 			setInputText('');
 		}
+		else if (process.env.NODE_ENV === 'development' && inputText[0] === '~') {
+			const split = inputText.slice(1).split(' ');
+			doDevCommand(split[0], split.slice(1));
+			setInputText('');
+		}
 		else {
 			setTypo(true);
 		}
@@ -96,7 +131,7 @@ export function BottomBar (props) {
 					value={inputText}
 					onKeyPress={onKeyPress}
 					onKeyDown={onKeyDown}
-					onPaste={e => e.preventDefault()} // disable paste
+					onPaste={e => { if (process.env.NODE_ENV !== 'development') e.preventDefault() }} // disable paste in production
 					onChange={e => setInputText(e.target.value)}
 				/>
 			</form>
