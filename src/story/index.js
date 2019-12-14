@@ -10,6 +10,7 @@ const tagsToIgnore = [
 // any time a line's tag matches one of the keys here, we also add every tag in the object associated with that key to the line's metadata
 const impliedTags = {
   'system': { timescale: 0, suppressTypingIndicator: true },
+  'debug': { timescale: 0, suppressTypingIndicator: true },
   'warning': { interruptible: true }
 }
 
@@ -70,11 +71,15 @@ story.BindExternalFunction("time_duration_to_string", timeDurationToString);
 story.BindExternalFunction("remaining_time_to_string", remainingTimeToString);
 story.BindExternalFunction("total_time_to_string", () => timeDurationToString(totalSeconds()));
 
+if (process.env.NODE_ENV === 'development') setVariable('dev_env', true);
+
 function continueStory () {
-  const line = getLine();
+  let line = getLine();
+
+  if (line && line.tags.deb_debug && process.env.NODE_ENV !== 'development') line = getLine(); // skip debug lines
 
   if (line === null) return null;
-  
+
   const choices = getChoices();
 
   if (line.tags.startTimer) startTime = new Date();

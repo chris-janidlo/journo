@@ -33,6 +33,8 @@ VAR TRAVIS_TPM = 540
 // how much to scale follow-up messages in thinking time. to define a follow-up: after the user sends a message, Travis sends one non-follow-up message and any number of follow-up messages.
 VAR FOLLOW_UP_TPM_SCALE = 0.5
 
+VAR dev_env = false
+
 // in journo terms, this is the person you're currently chatting with. can be used to de-anonymyze travis after a while
 VAR connected_user = ""
 
@@ -40,8 +42,19 @@ VAR total_respect = 10
 
 VAR just_interrupted = false
 
+VAR interruptions = 0
 == interrupted
 {not just_interrupted: ->->}
+~ alter(interruptions, 1)
 // can count interruptions here if we want Travis to complain about you later
-{!Ok, first of all, interrupting someone while they're typing is very rude. It derails the conversation and honestly just makes you look impatient.|What did I say about interruptions?|I really wish you would stop interrupting me.|Alright, I'm going to be nice. You get three more interruptions and then I'm out.|Two more interruptions. Use them wisely.|One more interruption before I stop answering any questions.|Last interruption.|Alright, that's it. I can't handle the constant interruptions. Good luck writing your article, you'll need it. -> END}
+{ interruptions:
+    - 1: Ok, first of all, interrupting someone while they're typing is very rude. It derails the conversation and honestly just makes you look impatient.
+    - 2: What did I say about interruptions?
+    - 3: I really wish you would stop interrupting me.
+    - 4: Alright, I'm going to be nice. You get three more interruptions and then I'm out.
+    - 5: Two more interruptions. Use them wisely.
+    - 6: One more interruption before I stop answering any questions.
+    - 7: Last interruption.
+    - 8: Alright, that's it. I can't handle the constant interruptions. Good luck writing your article, you'll need it. -> final_article
+}
 ->->

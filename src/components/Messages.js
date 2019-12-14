@@ -22,8 +22,12 @@ const useStyles = makeStyles(theme => {
       width: '100%',
       flex: 1
     },
-    systemMessage: {
+    systemMessageText: {
       width: '100%'
+    },
+    devDebugMessageText: {
+      width: '100%',
+      fontFamily: "'Roboto Mono', monospace"
     },
     messages: {
       height: `calc(100vh - ${topBarHeight}px - ${bottomBarHeight}px)`
@@ -36,10 +40,27 @@ function SystemMessage (props) {
 
   return (
     <ListItem>
-      <Typography className={classes.systemMessage} component='div' color='textSecondary' align='center' >
+      <Typography
+        className={classes.systemMessageText} component='div' color='textSecondary' align='center' >
         <ReactMarkdown source={'**JournoBot**: ' + props.line.text} />
       </Typography>
     </ListItem>
+  );
+}
+
+function DevDebugMessage (props) {
+  const classes = useStyles();
+
+  return (
+    <Fragment>
+      <Divider />
+      <ListItem>
+        <Typography className={classes.devDebugMessageText} component='div' color='error' align='center' >
+          <ReactMarkdown source={'(debug) ' + props.line.text} />
+        </Typography>
+      </ListItem>
+      <Divider />
+    </Fragment>
   );
 }
 
@@ -93,7 +114,9 @@ export function Messages (props) {
       <ScrollableFeed className={classes.messages} forceScroll >
         {lines.map(l => l.tags.system
           ? <SystemMessage key={i++} line={l} />
-          : <NormalMessage key={i++} line={l} chatPartner={props.chatPartner} />)}
+          : l.tags.debug
+            ? <DevDebugMessage key={i++} line={l} />
+            : <NormalMessage key={i++} line={l} chatPartner={props.chatPartner} />)}
       </ScrollableFeed>
     </Fragment>
   );

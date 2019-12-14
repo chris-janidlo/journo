@@ -8,7 +8,6 @@ TODO:
 == plot ==
 
 == code ==
-add ability to redirect to story content in develop mode
 create favicon
 let users horizontally scroll the prompts using their vertical scroll wheels
 scroll so that the next upcoming character in a prompt is always visible
