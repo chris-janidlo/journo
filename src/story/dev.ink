@@ -7,4 +7,4 @@
 // ~ interruptions = _
 // ~ MAX_INTERVIEW_TIME = 60 * _
 doing dev setup # debug // # startTimer
--> about_travis
+-> intro
