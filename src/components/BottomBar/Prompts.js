@@ -36,17 +36,30 @@ const useStyles = makeStyles(theme => {
 
 // takes text and color
 // text is a string
-// color is the Material UI Typography color attribute
+// color is one of 'regular', 'grey', and 'error'
 function ColoredText (props) {
 	const classes = useStyles();
+
+	const { text, color } = props;
+
+	const colorMap = {
+		'correct': 'initial',
+		'grey': 'secondary',
+		'error': 'error'
+	};
+
+	if (!(color in colorMap)) {
+		throw new Error(`unexpected color value ${color} (expected one of ${Object.keys(colorMap)})`);
+	}
 
 	return (
 		<Typography
 			component='span'
-			color={props.color}
+			color={colorMap[color]}
 			className={classes.coloredText}
+			style={{backgroundColor: color === 'error' ? '#ffdddd' : 'inherit'}}
 		>
-			{props.text}
+			{text}
 		</Typography>
 	)
 }
@@ -74,7 +87,7 @@ function PromptSpacer (props) {
 function GreyPrompt (props) {
 	return (
 		<PromptWrapper>
-			<ColoredText text={props.text} color='secondary' />
+			<ColoredText text={props.text} color='grey' />
 		</PromptWrapper>
 	);
 }
@@ -113,7 +126,7 @@ function InteractivePrompt (props) {
 			props.setTypo(!shareEverySymbolSoFar);
 		}
 
-		const color = processingInput ? (shareEverySymbolSoFar ? 'initial' : 'error') : 'secondary';
+		const color = processingInput ? (shareEverySymbolSoFar ? 'correct' : 'error') : 'grey';
 		coloredSymbols.push(<ColoredText key={i} text={(processingInput ? inputSymbols : targetSymbols)[i]} color={color} />);
 	}
 
