@@ -187,12 +187,12 @@ export const Prompts = memo(props => {
 	const inputSymbols = [...inputText]; // in case input contains unicode (https://stackoverflow.com/q/46157867/5931898)
 	const choiceSymbols = choices.map(c => [...c]);
 
-	let longestStartsWithLength = 0;
+	let longestSharedLength = 0;
 
 	if (inputSymbols.length !== 0) {
 		for (let i = 0; i < inputSymbols.length; i++) {
 			if (choiceSymbols.some(c => arrayStartsWith(c, inputSymbols.slice(0, i + 1)))) {
-				longestStartsWithLength++;
+				longestSharedLength++;
 			}
 		}
 	}
@@ -208,7 +208,7 @@ export const Prompts = memo(props => {
 				<Fragment key={index++}>
 					{ c === choiceSymbols[0] ? null : <PromptSpacer /> }
 					<InteractivePrompt
-						longestStartsWithLength={longestStartsWithLength}
+						longestSharedLength={longestSharedLength}
 						inputSymbols={inputSymbols}
 						targetSymbols={c}
 						setTypo={setTypo}
