@@ -66,6 +66,7 @@ function ColoredText (props) {
 
 function PromptWrapper (props) {
 	const classes = useStyles();
+
 	return (
 		<TableCell className={classes.promptTableCell} align='center'>
 			{props.children}
@@ -85,19 +86,23 @@ function PromptSpacer (props) {
 
 // prompt for a choice that definitely is not being typed out
 function GreyPrompt (props) {
+	const { text } = props;
+
 	return (
 		<PromptWrapper>
-			<ColoredText text={props.text} color='grey' />
+			<ColoredText text={text} color='grey' />
 		</PromptWrapper>
 	);
 }
 
 // prompt for a choice that may or may not be in the process of being typed out
 function InteractivePrompt (props) {
-	const inputSymbols = props.inputSymbols; // player input
-	const targetSymbols = props.targetSymbols; // this prompt's choice
-
-	const longestSharedLength = props.longestStartsWithLength;
+	const {
+		inputSymbols, // player input
+		targetSymbols, // this prompt's choice
+		longestSharedLength,
+		setTypo
+	} = props;
 
 	// check if we know before doing anything else that the user isn't trying to type this choice out, and if so grey it
 	if (inputSymbols.length === 0 || targetSymbols.length < longestSharedLength) return <GreyPrompt text={targetSymbols.join('')} />;
@@ -123,7 +128,7 @@ function InteractivePrompt (props) {
 		
 		if (processingInput) {
 			if (shareEverySymbolSoFar) sharedLength++;
-			props.setTypo(!shareEverySymbolSoFar);
+			setTypo(!shareEverySymbolSoFar);
 		}
 
 		const color = processingInput ? (shareEverySymbolSoFar ? 'correct' : 'error') : 'grey';
@@ -133,7 +138,7 @@ function InteractivePrompt (props) {
 	// handle any additional symbols beyond the target length. every one of these additional symbols must be a typo
 	for (let i = targetSymbols.length; i < inputSymbols.length; i++) {
 		coloredSymbols.push(<ColoredText key={i} text={inputSymbols[i]} color='error' />);
-		props.setTypo(true);
+		setTypo(true);
 	}
 
 	return (
@@ -169,7 +174,8 @@ function arrayStartsWith (first, second) {
 
 // memo is necessary here because if the component re-renders it will call setTypo, which is often not wanted (for instance when the player hits enter on an incomplete but otherwise typo-free input)
 export const Prompts = memo(props => {
-	const choices = props.choices;
+	const { choices, inputText, setTypo } = props;
+
 	if (!Array.isArray(choices) || !choices.length) {
 		return (
 			<PromptsWrapper>
@@ -178,7 +184,7 @@ export const Prompts = memo(props => {
 		);
 	}
 
-	const inputSymbols = [...props.inputText]; // in case input contains unicode (https://stackoverflow.com/q/46157867/5931898)
+	const inputSymbols = [...inputText]; // in case input contains unicode (https://stackoverflow.com/q/46157867/5931898)
 	const choiceSymbols = choices.map(c => [...c]);
 
 	let longestStartsWithLength = 0;
@@ -191,7 +197,7 @@ export const Prompts = memo(props => {
 		}
 	}
 	else {
-		props.setTypo(false);
+		setTypo(false);
 	}
 
 	let index = 0;
@@ -205,7 +211,7 @@ export const Prompts = memo(props => {
 						longestStartsWithLength={longestStartsWithLength}
 						inputSymbols={inputSymbols}
 						targetSymbols={c}
-						setTypo={props.setTypo}
+						setTypo={setTypo}
 					/>
 				</Fragment>
 			)}

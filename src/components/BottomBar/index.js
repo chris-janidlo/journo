@@ -65,11 +65,13 @@ function doDevCommand (command, args) {
 function TypingIndicator (props) {
 	const classes = useStyles();
 
-  if (!props.active) return null;
+	const { active, chatPartner } = props;
+
+  if (!active) return null;
 
   return (
     <Typography className={classes.typingIndicator}>
-      <i>{props.chatPartner} is typing...</i>
+      <i>{chatPartner} is typing...</i>
     </Typography>
   )
 }
@@ -80,7 +82,7 @@ export function BottomBar (props) {
 	const [inputText, setInputText] = useState('');
 	const [typo, setTypo] = useState(false);
 	
-	const choices = props.choices;
+	const { choices, makeChoice, isTyping, chatPartner } = props;
 
 	// if the user hits enter while there are no prompts, then the textfield will remain in an error state until new prompts come in. this function checks if we're in such a state, and if we are, clears the typo state. should only be called where the user is modifying text but not hitting the enter key
 	function clearEmptyEnterTypo () {
@@ -98,7 +100,7 @@ export function BottomBar (props) {
 		}
 		
 		if (choices.includes(inputText)) {
-			props.makeChoice(inputText);
+			makeChoice(inputText);
 			setInputText('');
 		}
 		else if (process.env.NODE_ENV === 'development' && inputText[0] === '~') {
@@ -135,7 +137,7 @@ export function BottomBar (props) {
 					onChange={e => setInputText(e.target.value)}
 				/>
 			</form>
-      <TypingIndicator active={props.isTyping} chatPartner={props.chatPartner} />
+      <TypingIndicator active={isTyping} chatPartner={chatPartner} />
     </Paper>
   );
 }

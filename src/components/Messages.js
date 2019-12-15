@@ -38,11 +38,13 @@ const useStyles = makeStyles(theme => {
 function SystemMessage (props) {
   const classes = useStyles();
 
+  const { line } = props;
+
   return (
     <ListItem>
       <Typography
         className={classes.systemMessageText} component='div' color='textSecondary' align='center' >
-        <ReactMarkdown source={'**JournoBot**: ' + props.line.text} />
+        <ReactMarkdown source={'**JournoBot**: ' + line.text} />
       </Typography>
     </ListItem>
   );
@@ -51,12 +53,14 @@ function SystemMessage (props) {
 function DevDebugMessage (props) {
   const classes = useStyles();
 
+  const { line } = props;
+
   return (
     <Fragment>
       <Divider />
       <ListItem>
         <Typography className={classes.devDebugMessageText} component='div' color='error' align='center' >
-          <ReactMarkdown source={'(debug) ' + props.line.text} />
+          <ReactMarkdown source={'(debug) ' + line.text} />
         </Typography>
       </ListItem>
       <Divider />
@@ -103,7 +107,7 @@ function NormalMessage (props) {
 export function Messages (props) {
   const classes = useStyles();
 
-  const { lines } = props;
+  const { lines, chatPartner } = props;
 
   if (!Array.isArray(lines) || !lines.length) return null;
 
@@ -116,7 +120,7 @@ export function Messages (props) {
           ? <SystemMessage key={i++} line={l} />
           : l.tags.debug
             ? <DevDebugMessage key={i++} line={l} />
-            : <NormalMessage key={i++} line={l} chatPartner={props.chatPartner} />)}
+            : <NormalMessage key={i++} line={l} chatPartner={chatPartner} />)}
       </ScrollableFeed>
     </Fragment>
   );

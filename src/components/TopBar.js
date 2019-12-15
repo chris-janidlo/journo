@@ -6,8 +6,11 @@ import {
 } from '@material-ui/core';
 
 export function TopBar (props) {
+  const { chatPartner } = props;
+
   let title = 'Journo - Newspaper';
-  if (props.chatPartner !== '') title = `Connected with ${props.chatPartner} - ${title}`;
+  if (chatPartner !== '') title = `Connected with ${chatPartner} - ${title}`;
+
   return (
     <Fragment>
       <AppBar position="fixed" elevation={0}>
