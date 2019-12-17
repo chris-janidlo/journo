@@ -47,14 +47,22 @@ whistleblower - Travis Wagner
 newspaper names
 	spacey-sounding broadsheet
 		zenith news
-		ark news
-		star news
-		starmouth herald
 		the daily star
-		the star daily
 		the daily zenith
 	tech focused news site
-		disrupt news
+		san francisco albatross
+	woke new media site
+		psychopomp
+
+chat app names
+	livedrop
+	send.ly
+	tabula
+	sigint
+	hermes
+	psychopomp
+	interpres
+	courier
 
 initial scoop
 	recommending users to be tracked by law enforcement if facebook predicts they will commit a crime
