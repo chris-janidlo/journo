@@ -53,16 +53,7 @@ newspaper names
 		san francisco albatross
 	woke new media site
 		psychopomp
-
-chat app names
-	livedrop
-	send.ly
-	tabula
-	sigint
-	hermes
-	psychopomp
-	interpres
-	courier
+		pathologue
 
 initial scoop
 	recommending users to be tracked by law enforcement if facebook predicts they will commit a crime
@@ -80,7 +71,7 @@ Bofaeock: a brief history
 		Bofaeock is only just barely alive - if they don't leave, they'll die within a generation
 	scouting squad led by Zark Urckbemerg to find inhabitable planets
 	they found that earth was close, and it looked promising
-		when they arrived they realized it wouldn't work long term. TODO: working on why that is
+		when they arrived they realized it wouldn't work long term, due to severe alien allergens in the air that their models didn't predict
 		however, they realized that they could use humanity as a massive botnet to run their scouting software on
 		established the scouting ship (the mothership) as a base of operations, hanging out disguised in geostationary orbit over area 51
 			us government is aware of Bofaeockians (multiple alien species live on earth with a men-in-black style relationship) but not aware of the botnet
