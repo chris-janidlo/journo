@@ -17,7 +17,8 @@ Type __reply__ to start a secure chat session with this user. Type __inbox__ to 
 Initializing connection with "FbkE7"... # system
 Done. You are now connected to chat. # system # timescale .5
 ~ connected_user = "FbkE7"
-Hello, who is this? -> new_phone_who_dis
+Hello, who is this? # delay 5
+    -> new_phone_who_dis
 
 = new_phone_who_dis
 * this is Newspaper
@@ -42,7 +43,7 @@ Hello, who is this? -> new_phone_who_dis
 
 = busy
 You should have reached out earlier. I'm a busy man.
-Well, get to it - I obviously don't have all day. # delay 5
+Well, get to it - I obviously don't have all day. # delay 3
 <- what
 <- hub
 -> DONE

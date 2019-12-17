@@ -29,9 +29,9 @@ VAR MAX_INTERVIEW_TIME = 900
 // words per minute. word = 5 characters
 VAR TRAVIS_WPM = 250
 // thoughts per minute. the amount of 5 character words travis can fully process in one minute. can represent either composing or reading
-VAR TRAVIS_TPM = 540
-// how much to scale follow-up messages in thinking time. to define a follow-up: after the user sends a message, Travis sends one non-follow-up message and any number of follow-up messages.
-VAR FOLLOW_UP_TPM_SCALE = 0.5
+VAR TRAVIS_TPM = 100
+// how much to scale follow-up messages in thinking time. follow ups are defined as messages travis sends after responding (after the user sends a message, Travis sends one response followed by any number of follow-up messages)
+VAR FOLLOW_UP_TPM_SCALE = 0.15
 
 VAR dev_env = false
 
