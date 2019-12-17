@@ -22,7 +22,7 @@ Hello, who is this? # delay 5
 
 = new_phone_who_dis
 * this is Newspaper
-    Oh, fantastic, I wasn't expecting this thing to actually work. # startTimer
+    Oh, fantastic, I wasn't expecting this thing to actually work.
 * who are you?
     Sorry, don't recognize the number, won't share my name.
     -> new_phone_who_dis
@@ -33,7 +33,7 @@ Hello, who is this? # delay 5
     I only have {total_time_to_string()} since I'm about to leave for a series of high-priority meetings.
 * [.wait]
 
--After that I'm going on a tech-detox vacation in Thailand for a week. # interruptible
+-After that I'm going on a tech-detox vacation in Thailand for a week. # startTimer # interruptible
 * \ {total_time_to_string()} is not enough time to verify you as a source
     -> interrupted -> busy
 * [.wait]
