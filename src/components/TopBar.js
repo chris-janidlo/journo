@@ -8,14 +8,13 @@ import {
 export function TopBar (props) {
   const { chatPartner } = props;
 
-  let title = 'Journo - Newspaper';
-  if (chatPartner !== '') title = `Connected with ${chatPartner} - ${title}`;
+  const title = (chatPartner === '') ? 'Inbox' : `Connected with ${chatPartner}`;
 
   return (
     <Fragment>
       <AppBar position="fixed" elevation={0}>
         <Toolbar>
-          <Typography style={{width: '100%'}} variant="h6" align='center' noWrap>
+          <Typography variant="h6" noWrap>
             {title}
           </Typography>
         </Toolbar>

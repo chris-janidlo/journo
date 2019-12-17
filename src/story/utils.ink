@@ -35,7 +35,7 @@ VAR FOLLOW_UP_TPM_SCALE = 0.15
 
 VAR dev_env = false
 
-// in journo terms, this is the person you're currently chatting with. can be used to de-anonymyze travis after a while
+// in livedrop terms, this is the person you're currently chatting with. can be used to de-anonymyze travis after a while
 VAR connected_user = ""
 
 VAR total_respect = 10

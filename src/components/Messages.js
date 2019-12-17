@@ -44,7 +44,7 @@ function SystemMessage (props) {
     <ListItem>
       <Typography
         className={classes.systemMessageText} component='div' color='textSecondary' align='center' >
-        <ReactMarkdown source={'**JournoBot**: ' + line.text} />
+        <ReactMarkdown source={'**DropBot**: ' + line.text} />
       </Typography>
     </ListItem>
   );
