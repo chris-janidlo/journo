@@ -8,6 +8,7 @@ let top bar wrap lines
 
 TODO:
 == plot ==
+rework intro so that it makes more sense with how encrypted communications work
 
 == code ==
 let users horizontally scroll the prompts using their vertical scroll wheels
