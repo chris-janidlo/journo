@@ -1,4 +1,4 @@
-import React, { Fragment, memo } from 'react';
+import React, { Fragment, PureComponent, createRef, forwardRef } from 'react';
 import {
 	Box,
 	Typography,
@@ -37,10 +37,8 @@ const useStyles = makeStyles(theme => {
 // takes text and color
 // text is a string
 // color is one of 'regular', 'grey', and 'error'
-function ColoredText (props) {
+const ColoredText = forwardRef(({ text, color }, ref) => {
 	const classes = useStyles();
-
-	const { text, color } = props;
 
 	const colorMap = {
 		'correct': 'initial',
@@ -58,11 +56,12 @@ function ColoredText (props) {
 			color={colorMap[color]}
 			className={classes.coloredText}
 			style={{backgroundColor: color === 'error' ? '#ffdddd' : 'inherit'}}
+			ref={ref}
 		>
 			{text}
 		</Typography>
-	)
-}
+	);
+});
 
 function PromptWrapper (props) {
 	const classes = useStyles();
@@ -94,14 +93,14 @@ function GreyPrompt ({ text }) {
 }
 
 // prompt for a choice that may or may not be in the process of being typed out
-function InteractivePrompt ({ inputSymbols, targetSymbols, longestSharedLength, setTypo }) {
-
+const InteractivePrompt = React.forwardRef(({ inputSymbols, targetSymbols, longestSharedLength, setTypo }, ref) => {
 	// check if we know before doing anything else that the user isn't trying to type this choice out, and if so grey it
 	if (inputSymbols.length === 0 || targetSymbols.length < longestSharedLength) return <GreyPrompt text={targetSymbols.join('')} />;
-	
+
 	const coloredSymbols = [];
 	let sharedLength = 0; // number of symbols shared between the start of input and target symbols
 	let shareEverySymbolSoFar = true; // true if the first i members of inputSymbols and targetSymbols are the same
+	let haveSentRef = false;
 
 	for (let i = 0; i < targetSymbols.length; i++) {
 		// check for parsing errors first
@@ -117,19 +116,40 @@ function InteractivePrompt ({ inputSymbols, targetSymbols, longestSharedLength, 
 		}
 		
 		const processingInput = i < inputSymbols.length;
-		
+
 		if (processingInput) {
 			if (shareEverySymbolSoFar) sharedLength++;
 			setTypo(!shareEverySymbolSoFar);
 		}
 
-		const color = processingInput ? (shareEverySymbolSoFar ? 'correct' : 'error') : 'grey';
-		coloredSymbols.push(<ColoredText key={i} text={(processingInput ? inputSymbols : targetSymbols)[i]} color={color} />);
+		// if we're on a grey symbol and haven't set the ref yet, it's time to set the ref
+		const shouldSendRef = !haveSentRef && !processingInput;
+
+		coloredSymbols.push(
+			<ColoredText
+				key={i}
+				text={(processingInput ? inputSymbols : targetSymbols)[i]}
+				color={processingInput ? (shareEverySymbolSoFar ? 'correct' : 'error') : 'grey'}
+				ref={shouldSendRef ? ref : null}
+			/>
+		);
+
+		if (!haveSentRef) haveSentRef = shouldSendRef;
 	}
 
 	// handle any additional symbols beyond the target length. every one of these additional symbols must be a typo
 	for (let i = targetSymbols.length; i < inputSymbols.length; i++) {
-		coloredSymbols.push(<ColoredText key={i} text={inputSymbols[i]} color='error' />);
+		const shouldSendRef = !haveSentRef && i === inputSymbols.length - 1;
+
+		coloredSymbols.push(
+			<ColoredText
+				key={i}
+				text={inputSymbols[i]}
+				color='error'
+				ref={shouldSendRef ? ref : null}
+			/>
+		);
+
 		setTypo(true);
 	}
 
@@ -138,7 +158,7 @@ function InteractivePrompt ({ inputSymbols, targetSymbols, longestSharedLength, 
 			{coloredSymbols}
 		</PromptWrapper>
 	);
-}
+});
 
 function PromptsWrapper (props) {
 	const classes = useStyles();
@@ -164,49 +184,77 @@ function arrayStartsWith (first, second) {
 	return true;
 }
 
-// memo is necessary here because if the component re-renders it will call setTypo, which is often not wanted (for instance when the player hits enter on an incomplete but otherwise typo-free input)
-export const Prompts = memo(props => {
-	const { choices, inputText, setTypo } = props;
+// PureComponent is necessary here because if the component re-renders it will call setTypo, which is often not wanted (for instance, if the player hits enter on an incomplete but otherwise typo-free input. BottomBar will setTypo to true, but the InteractivePrompt in here will setTypo to false)
+export class Prompts extends PureComponent {
 
-	if (!Array.isArray(choices) || !choices.length) {
+	numNonGreyPrompts = 0; // use a class variable instead of state because we need to change this in the render method
+
+	constructor (props) {
+		super(props);
+
+		this.leadingCharacterRef = createRef();
+		this.scrollToLatestCharacter = this.scrollToLatestCharacter.bind(this);
+	}
+
+	scrollToLatestCharacter () {
+		if (this.numNonGreyPrompts === 1 && this.leadingCharacterRef.current !== null) {
+			this.leadingCharacterRef.current.scrollIntoView();
+		}
+	}
+
+	render () {
+		const { choices, inputText, setTypo } = this.props;
+
+		this.numNonGreyPrompts = 0;
+
+		if (!Array.isArray(choices) || !choices.length) {
+			return (
+				<PromptsWrapper>
+					<GreyPrompt text='&ensp;' />
+				</PromptsWrapper>
+			);
+		}
+
+		const inputSymbols = [...inputText]; // in case input contains unicode (https://stackoverflow.com/q/46157867/5931898)
+		const choiceSymbols = choices.map(c => [...c]);
+
+		let longestSharedLength = 0;
+
+		if (inputSymbols.length !== 0) {
+			for (let i = 0; i < inputSymbols.length; i++) {
+				const n = choiceSymbols.filter(c => arrayStartsWith(c, inputSymbols.slice(0, i + 1))).length;
+				if (n !== 0) {
+					longestSharedLength++;
+					this.numNonGreyPrompts = n; // only set this when n isn't 0 because we don't want to lose the value when we get past all the shared characters
+				}
+			}
+		}
+		else {
+			setTypo(false);
+		}
+
+		let index = 0;
+
 		return (
 			<PromptsWrapper>
-				<GreyPrompt text='&ensp;' />
-			</PromptsWrapper>
+				{choiceSymbols.map(c =>
+					<Fragment key={index++}>
+						{ c === choiceSymbols[0] ? null : <PromptSpacer /> }
+						<InteractivePrompt
+							longestSharedLength={longestSharedLength}
+							inputSymbols={inputSymbols}
+							targetSymbols={c}
+							setTypo={setTypo}
+							ref={this.leadingCharacterRef}
+						/>
+					</Fragment>
+				)}
+			</PromptsWrapper>		
 		);
 	}
 
-	const inputSymbols = [...inputText]; // in case input contains unicode (https://stackoverflow.com/q/46157867/5931898)
-	const choiceSymbols = choices.map(c => [...c]);
-
-	let longestSharedLength = 0;
-
-	if (inputSymbols.length !== 0) {
-		for (let i = 0; i < inputSymbols.length; i++) {
-			if (choiceSymbols.some(c => arrayStartsWith(c, inputSymbols.slice(0, i + 1)))) {
-				longestSharedLength++;
-			}
-		}
-	}
-	else {
-		setTypo(false);
+	componentDidUpdate () {
+		this.scrollToLatestCharacter();
 	}
 
-	let index = 0;
-
-	return (
-		<PromptsWrapper>
-			{choiceSymbols.map(c =>
-				<Fragment key={index++}>
-					{ c === choiceSymbols[0] ? null : <PromptSpacer /> }
-					<InteractivePrompt
-						longestSharedLength={longestSharedLength}
-						inputSymbols={inputSymbols}
-						targetSymbols={c}
-						setTypo={setTypo}
-					/>
-				</Fragment>
-			)}
-		</PromptsWrapper>		
-	);
-});
+}
