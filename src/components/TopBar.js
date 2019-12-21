@@ -20,7 +20,7 @@ const useStyles = makeStyles(theme => {
   };
 });
 
-function LockDisplay (props) {
+function LockDisplay () {
   return (
     <Fragment>
       <span>&ensp;</span>

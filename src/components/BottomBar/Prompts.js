@@ -63,18 +63,18 @@ const ColoredText = forwardRef(({ text, color }, ref) => {
 	);
 });
 
-function PromptWrapper (props) {
+function PromptWrapper ({ children }) {
 	const classes = useStyles();
 
 	return (
 		<TableCell className={classes.promptTableCell} align='center'>
-			{props.children}
+			{children}
 		</TableCell>
 	);
 }
 
 // break in underline to visually space out prompts
-function PromptSpacer (props) {
+function PromptSpacer () {
 	const classes = useStyles();
 	return (
 		<TableCell className={classes.promptTableCell} style={{borderBottom:'none'}}>
@@ -160,7 +160,7 @@ const InteractivePrompt = React.forwardRef(({ inputSymbols, targetSymbols, longe
 	);
 });
 
-function PromptsWrapper (props) {
+function PromptsWrapper ({ children }) {
 	const classes = useStyles();
 
 	return (
@@ -169,7 +169,7 @@ function PromptsWrapper (props) {
 			<Table className={classes.promptTable}>
 				<TableBody>
 					<TableRow>
-						{props.children}
+						{children}
 					</TableRow>
 				</TableBody>
 			</Table>

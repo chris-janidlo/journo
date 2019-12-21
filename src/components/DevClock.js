@@ -4,7 +4,7 @@ import {
 	remainingSeconds
 } from '../story';
 
-export function DevClock (props) {
+export function DevClock () {
 	const [elapsed, setElapsed] = useState(elapsedSeconds());
 	const [remaining, setRemaining] = useState(remainingSeconds());
 
