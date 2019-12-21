@@ -9,7 +9,7 @@ import {
 import {
 	getStoryVariable,
 	setStoryVariable
-} from '../../story'
+} from '../story'
 
 const useStyles = makeStyles(theme => {
 	const inputMargin = theme.spacing(2);

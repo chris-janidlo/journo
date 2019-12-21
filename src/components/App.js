@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 import { CssBaseline } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/core/styles';
-import { theme } from './theme';
-import { TopBar } from './components/TopBar';
-import { Messages } from './components/Messages';
-import { BottomBar } from './components/BottomBar';
+import { theme } from '../theme';
+import { TopBar } from './TopBar';
+import { Messages } from './Messages';
+import { BottomBar } from './BottomBar';
 import {
   continueStory,
   makeChoice,
   getStoryVariable,
   setStoryVariable
-} from './story';
-import { DevClock } from './components/DevClock';
+} from '../story';
+import { DevClock } from './DevClock';
 
 export class App extends Component {
 
