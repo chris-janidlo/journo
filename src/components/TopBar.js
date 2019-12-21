@@ -31,10 +31,8 @@ function LockDisplay (props) {
   );
 }
 
-export function TopBar (props) {
+export function TopBar ({ chatPartner }) {
   const classes = useStyles();
-
-  const { chatPartner } = props;
 
   const partnerConnected = chatPartner !== '';
   const title = partnerConnected ? `Connected with ${chatPartner}` : 'Inbox';

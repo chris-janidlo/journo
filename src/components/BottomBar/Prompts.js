@@ -85,9 +85,7 @@ function PromptSpacer (props) {
 }
 
 // prompt for a choice that definitely is not being typed out
-function GreyPrompt (props) {
-	const { text } = props;
-
+function GreyPrompt ({ text }) {
 	return (
 		<PromptWrapper>
 			<ColoredText text={text} color='grey' />
@@ -96,13 +94,7 @@ function GreyPrompt (props) {
 }
 
 // prompt for a choice that may or may not be in the process of being typed out
-function InteractivePrompt (props) {
-	const {
-		inputSymbols, // player input
-		targetSymbols, // this prompt's choice
-		longestSharedLength,
-		setTypo
-	} = props;
+function InteractivePrompt ({ inputSymbols, targetSymbols, longestSharedLength, setTypo }) {
 
 	// check if we know before doing anything else that the user isn't trying to type this choice out, and if so grey it
 	if (inputSymbols.length === 0 || targetSymbols.length < longestSharedLength) return <GreyPrompt text={targetSymbols.join('')} />;

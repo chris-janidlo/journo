@@ -35,10 +35,8 @@ const useStyles = makeStyles(theme => {
   }
 });
 
-function SystemMessage (props) {
+function SystemMessage ({ line }) {
   const classes = useStyles();
-
-  const { line } = props;
 
   return (
     <ListItem>
@@ -50,10 +48,8 @@ function SystemMessage (props) {
   );
 }
 
-function DevDebugMessage (props) {
+function DevDebugMessage ({ line }) {
   const classes = useStyles();
-
-  const { line } = props;
 
   return (
     <Fragment>
@@ -68,10 +64,8 @@ function DevDebugMessage (props) {
   );
 }
 
-function NormalMessage (props) {
+function NormalMessage ({ line, chatPartner }) {
   const classes = useStyles();
-
-  const { line, chatPartner } = props;
 
   const player = line.fromPlayer;
   const hidden = line.tags.hideUsername;
@@ -104,10 +98,8 @@ function NormalMessage (props) {
   );
 }
 
-export function Messages (props) {
+export function Messages ({ lines, chatPartner }) {
   const classes = useStyles();
-
-  const { lines, chatPartner } = props;
 
   if (!Array.isArray(lines) || !lines.length) return null;
 

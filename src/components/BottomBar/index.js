@@ -62,10 +62,8 @@ function doDevCommand (command, args) {
 	}
 }
 
-function TypingIndicator (props) {
+function TypingIndicator ({ active, chatPartner }) {
 	const classes = useStyles();
-
-	const { active, chatPartner } = props;
 
   if (!active) return null;
 
@@ -76,13 +74,12 @@ function TypingIndicator (props) {
   )
 }
 
-export function BottomBar (props) {
+export function BottomBar ({ choices, makeChoice, isTyping, chatPartner }) {
 	const classes = useStyles();
 	
 	const [inputText, setInputText] = useState('');
 	const [typo, setTypo] = useState(false);
-	
-	const { choices, makeChoice, isTyping, chatPartner } = props;
+
 
 	// if the user hits enter while there are no prompts, then the textfield will remain in an error state until new prompts come in. this function checks if we're in such a state, and if we are, clears the typo state. should only be called where the user is modifying text but not hitting the enter key
 	function clearEmptyEnterTypo () {
