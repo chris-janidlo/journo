@@ -1,10 +1,15 @@
 outline from outer space
+	log into Livedrop
 	establish contact with travis
 	interview him about his scoop
-	details emerge slowly that he isn't what he says he is
-	you may or may not discover that travis is an alien and that facebook is all a big Bofaeockian conspiracy
-	we leave livedrop and you are prompted to choose what kind of story you want to publish based off what you've learned
+	you follow the choices to different endings, stanley parable style
+		facebook is tracking users' criminal records
+		facebook is selling those criminal records, and predictions made based off of them, to the police
+		travis is an alien
+		travis is an alien and facebook is all a big alien conspiracy
+	you're logged out of Livedrop and are prompted to choose what kind of story you want to publish based off what you've learned
 	you're told how your story impacts the world
+	loop back to start
 
 whistleblower - Travis Wagner
 	eccentric
