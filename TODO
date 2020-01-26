@@ -3,14 +3,15 @@ global bug and to do list
 FIXME:
 time warnings don't always show at the first opportunity to do so (intended behavior: once the right amount of time has passed, they show up at the end of a block of travis text)
 	story.canContinue doesn't seem to be the right test for this, for instance it's true if there are nested choices even though intuitively it should be false there
-make size of messages fully responsive and not hardcoded
-let top bar wrap lines
 
 TODO:
 == plot ==
 rework intro so that it makes more sense with how encrypted communications work
 
 == code ==
+make size of messages fully responsive and not hardcoded
+let top bar wrap lines
+add more test cases to dev.ink
 add hotjar or inspectlet for user recording
 	figure out which one is better
 add accessability mode (lets you click options instead of typing them)
