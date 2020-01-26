@@ -21,7 +21,7 @@
     "react": "latest",
     "react-dom": "latest",
     "react-markdown": "^4.2.2",
-    "react-scripts": "latest",
+    "react-scripts": "^3.3.0",
     "react-scrollable-feed": "^1.1.0"
   },
   "devDependencies": {
