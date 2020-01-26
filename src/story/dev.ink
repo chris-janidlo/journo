@@ -8,3 +8,14 @@
 // ~ MAX_INTERVIEW_TIME = 60 * _
 doing dev setup # debug // # startTimer
 -> intro
+
+== lots_of_options_test
+* report
+* reply
+* represent
+* representative
+* retry
+* retort
+* rhetorical
+* rhubarb
+- -> intro
