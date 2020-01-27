@@ -24,7 +24,7 @@ EXTERNAL total_time_to_string ()
 ~ x = x + k
 
 // in seconds
-VAR MAX_INTERVIEW_TIME = 900
+VAR MAX_INTERVIEW_TIME = 300
 
 // words per minute. word = 5 characters
 VAR TRAVIS_WPM = 250

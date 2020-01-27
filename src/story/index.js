@@ -15,11 +15,9 @@ const impliedTags = {
 }
 
 const timeWarnings = [
-  { 'minutes': 10, 'warning': "Also don't forget that I have to leave in 10 minutes." },
-  { 'minutes':  5, 'warning': "Oh, and 5 minute warning." },
-  { 'minutes':  3, 'warning': "And are we almost done? Only have 3 more minutes." },
-  { 'minutes':  2, 'warning': "(2 minute warning.)" },
-  { 'minutes':  1, 'warning': "(1 minute warning!!)" }
+  { 'minutes':  4, 'warning': "Also don't forget that I have to leave in 4 minutes." },
+  { 'minutes':  2, 'warning': "Oh, and 2 minute warning." },
+  { 'minutes':  1, 'warning': "(1 minute warning.)" }
 ];
 let currentTimeMilestone = 0; // for tracking
 
