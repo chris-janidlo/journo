@@ -4,6 +4,7 @@ INCLUDE intro.ink
 INCLUDE hub.ink
 INCLUDE aboutTravis.ink
 INCLUDE endGame.ink
+INCLUDE majorityReport.ink
 
 # author: Chris Janidlo (crass_sandwich)
 # title: Journo (working title)
