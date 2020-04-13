@@ -1,4 +1,6 @@
-Only public because of Travis CI. Feels cute but might make it private later idk 😑
+Project is currently in a tech demo state. Might work on it in the future and write out an actual story, and you can see some of the lore I had initially planned in here as well, if you're interested.
+
+
 
 Everything needed to work on this is in the repo. Only uses a few cloud tools:
 * [hosting](https://crass-sandwich.itch.io/journo)
